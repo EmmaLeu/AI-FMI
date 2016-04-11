@@ -1,0 +1,14 @@
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\bin\Debug\Testing.exe.config
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\bin\Debug\Testing.exe
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\bin\Debug\Testing.pdb
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\bin\Debug\BE.dll
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\bin\Debug\DA.dll
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\bin\Debug\EntityFramework.dll
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\bin\Debug\BE.pdb
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\bin\Debug\DA.pdb
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\bin\Debug\EntityFramework.xml
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\obj\Debug\TestingConsoleApp.csprojResolveAssemblyReference.cache
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\obj\Debug\Testing.exe
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\Testing\obj\Debug\Testing.pdb

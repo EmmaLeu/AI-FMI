@@ -1,0 +1,55 @@
+﻿@model AI.Models.MembersVM
+
+@{
+    ViewBag.Title = "ViewMembers";
+}
+<div class="col-md-4">
+    @if (Model.Members.Count > 0)
+    {
+        <h3>Members</h3>
+        foreach (var member in Model.Members)
+        {
+            <div class="bs-callout bs-callout-primary">
+                <img class="img-responsive img-thumbnail img-small" src=@Url.Action("GetProfilePicture", "Profile", new { id = member.ImageID })>
+                <a href=@Url.Action("ViewProfile", "Profile", new { id = member.UserID })>@member.Title @member.FirstName @member.LastName 
+                    @if (member.Rank != null)
+                    {
+                        <span>(@member.Rank)</span>
+                    }
+                </a>
+            </div>
+        }
+    }
+</div>
+<div class="col-md-4">
+    @if (Model.FormerMembers.Count > 0)
+    {
+        <h3>Former members</h3>
+            foreach (var member in Model.FormerMembers)
+            {
+                <div class="bs-callout bs-callout-primary">
+                    <img class="img-responsive img-thumbnail img-small" src=@Url.Action("GetProfilePicture", "Profile", new { id = member.ImageID })>
+                    @member.Title @member.FirstName @member.LastName
+                </div>
+            }
+    }
+</div>
+<div class="col-md-4">
+    @if (Model.Collaborators.Count > 0)
+    {
+        <h3>Collaborators</h3>
+        foreach (var member in Model.Collaborators)
+        {
+            <div class="bs-callout bs-callout-primary">
+                <img class="img-responsive img-thumbnail img-small" src=@Url.Action("GetProfilePicture", "Profile", new { id = member.ImageID })>
+  
+                    @member.Title @member.FirstName @member.LastName
+                    @if (member.Institution != null)
+                    { 
+                        <span>(@member.Institution)</span>
+                    }
+            </div>
+        }
+    }
+</div>
+<div class="clearfix"></div>

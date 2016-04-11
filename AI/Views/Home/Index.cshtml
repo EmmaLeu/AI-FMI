@@ -1,0 +1,117 @@
+﻿@model AI.Models.RecentUpdatesVM
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="row">
+    <div class="col-md-12">
+        <div class="bs-callout bs-callout-primary">
+            <h4><a href="@Url.Action("Publications","Home")">Publications</a></h4>
+            <ul class="list-group">
+                @foreach (var item in Model.Publications)
+                {
+
+                        <li class="list-group-item">
+                            <i class="fa fa-book"></i>
+                            <small> Category: @item.Category</small>  
+                            <b>@item.Authors. </b>
+                            <i>@(item.Title != null ? item.Title + ". " : string.Empty)</i>
+                            <i>@(item.Book != null ? item.Book + ". " : string.Empty)</i>
+                            <i>@(item.Conference != null ? item.Conference + ", " : string.Empty)</i>
+                            <i>@(item.Journal != null ? item.Journal + ", " : string.Empty)</i>
+                            @(item.ApplicationNumber != null ? "Application Number " + item.ApplicationNumber + ", " : string.Empty)
+                            @(item.Volume != null ? "Volume " + item.Volume + ", " : string.Empty)
+                            @(item.Issue != null ? "Issue " + item.Issue + ", " : string.Empty)
+                            @(item.PatentNumber != null ? "Patent Numer " + item.PatentNumber + ", " : string.Empty)
+                            @(item.PatentOffice != null ? "Patent Office " + item.PatentOffice + ", " : string.Empty)
+                            @(item.Pages != null ? "Pages " + item.Pages + ", " : string.Empty)
+                            @(item.Publisher != null ? item.Publisher + ", " : string.Empty)
+                            @(item.Source != null ? "Source " + item.Source + ", " : string.Empty)
+                            @(item.PublicationDate != null ? item.PublicationDate + ". " : string.Empty)
+                        <small class="post-date pull-right">
+                            <i class="fa fa-clock-o"></i>
+                            <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                        </small>
+                </li>
+                }
+            </ul>
+            <a href="@Url.Action("Publications","Home")">Go to Publications <i class="fa fa-long-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="bs-callout bs-callout-primary">
+            <h4><a href="@Url.Action("Awards","Home")">Awards</a></h4>
+            <ul class="list-group">
+                @foreach (var item in Model.Awards)
+                {
+                    <li class="list-group-item">
+                        <i class="fa fa-trophy"></i> @item.Title, by @item.FullName
+                        <small class="post-date pull-right">
+                            <i class="fa fa-clock-o"></i>
+                            <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                        </small>
+                    </li>
+                }
+            </ul>
+            <a href="@Url.Action("Awards","Home")">Go to Awards <i class="fa fa-long-arrow-right"></i></a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="bs-callout bs-callout-primary">
+            <h4><a href="@Url.Action("News","Home")">News</a></h4>
+            <ul class="list-group">
+                @foreach (var item in Model.News)
+                {
+                    <li class="list-group-item">
+                        <i class="fa fa-paper-plane"></i> 
+                         @item.Title
+                        <small class="post-date pull-right">
+                            <i class="fa fa-clock-o"></i>
+                            <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                        </small>
+                    </li>
+                }
+            </ul>
+            <a href="@Url.Action("News","Home")">Go to News <i class="fa fa-long-arrow-right"></i></a>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <div class="bs-callout bs-callout-primary">
+            <h4><a href="@Url.Action("Software","Home")">Software</a></h4>
+            <ul class="list-group">
+                @foreach (var item in Model.Software)
+                {
+                    <li class="list-group-item">
+                        <i class="fa fa-trophy"></i> @item.Title, by @item.Authors
+                        <small class="post-date pull-right">
+                            <i class="fa fa-clock-o"></i>
+                            <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                        </small>
+                    </li>
+                }
+            </ul>
+            <a href="@Url.Action("Software","Home")">Go to Software <i class="fa fa-long-arrow-right"></i></a>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="bs-callout bs-callout-primary">
+            <h4><a href="@Url.Action("Datasets","Home")">Datasets</a></h4>
+            <ul class="list-group">
+                @foreach (var item in Model.Datasets)
+                {
+                    <li class="list-group-item"><i class="fa fa-paper-plane"></i> @item.Title, by @item.Authors
+                        <small class="post-date pull-right">
+                            <i class="fa fa-clock-o"></i>
+                            <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                        </small>
+                    </li>
+                }
+            </ul>
+            <a href="@Url.Action("Datasets","Home")">Go to Datasets <i class="fa fa-long-arrow-right"></i></a>
+        </div>
+    </div>
+</div>

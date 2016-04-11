@@ -1,0 +1,118 @@
+﻿@model AI.Models.UserInfoVM
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h3>Edit personal information</h3>
+<div class="row">
+    <div class="col-md-7 text-right"><h3><i class="fa fa-user" style="color: #FCA311;"></i> @Session.CurrentUser.Rank @Session.CurrentUser.FirstName @Session.CurrentUser.LastName</h3></div>
+    <div class="col-md-3"><img src=@Url.Action("GetDefaultProfileImage","Profile") class="img-thumbnail profile-picture" alt="default"></div> 
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <h5>Let people know more about you.</h5>
+    <hr />
+    <div class="form-horizontal col-md-6">
+        
+        <div class="form-group">
+            @Html.LabelFor(model => model.FirstName, "First Name", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LastName, "Last Name", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EnumDropDownListFor(model => model.Title, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Rank, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+
+                @Html.EnumDropDownListFor(model => model.Rank, htmlAttributes: new { @class = "form-control"})
+                @Html.ValidationMessageFor(model => model.Rank, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Birthday, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Birthday, "{0:MM/dd/yyyy}", new { htmlAttributes = new { @class = "form-control date-picker", @name = "Birthday" } })
+                @Html.ValidationMessageFor(model => model.Birthday, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        </div>
+        <div class="form-horizontal col-md-6">
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gender, "Gender", new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                <label class="radio-inline">Male</label>@Html.RadioButtonFor(model => model.Gender, false, new { name = "Gender", @class = "radio-inline" })
+                <label class="radio-inline">Female</label>@Html.RadioButtonFor(model => model.Gender, true, new { name = "Gender", @class = "radio-inline" })
+                @Html.ValidationMessageFor(model => model.Gender)
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Nationality, htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Nationality, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Nationality, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.InterestAreas, "Interest Areas", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.InterestAreas, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.InterestAreas, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ContactEmail, "*Contact Email", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.ContactEmail, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ContactEmail, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.CurrentInsitution, "Current Working Institution", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.CurrentInsitution, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.CurrentInsitution, "", new { @class = "text-danger" })
+            </div>
+        </div>
+            <div class="text-center">
+                <small>*-This email address will be made public.</small>
+            </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-5 col-md-9">
+            <button type="submit" value="Save" class="btn ai-btn-warning col-md-2">SAVE</button>
+        </div>
+    </div>
+}
+@section Scripts {
+     @Scripts.Render("~/bundles/jqueryval")
+     <script type="text/javascript">
+     $(function () {
+             $(".date-picker").datepicker({ dateFormat: 'd-M-y' }).val();
+             });
+     </script>
+}
+

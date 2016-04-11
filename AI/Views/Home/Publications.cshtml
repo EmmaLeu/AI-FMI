@@ -1,0 +1,108 @@
+﻿@model AI.Models.PublicationsVM
+
+@{
+    ViewBag.Title = "Publications";
+}
+<div id="publication-content-big">
+    <div class="row publication-header">
+        <h3 class="col-md-8">Publications
+            @if (Model.SearchText != null)
+            {
+                <div class="btn btn-default">@Model.SearchText <i class="fa fa-times" id="remove-filters"></i></div>
+            }
+        </h3>
+        
+        <div class="col-md-4 ai-vertical-align">
+            <input placeholder="Search publications..." id="in-search-publications" class="col-md-9 ai-search-box" />
+            <div class="col-md-3 ai-search-icon" id="btn-search-publications"><i style="color: white;" class="fa fa-search ai-vertical-align"></i></div>
+        </div>
+    </div>
+    <div id="publication-content">
+        @if (Model.Publications.Count > 0)
+        {
+            var currentYear = Model.Publications.First().PublicationDate;
+
+         <div><b>@currentYear</b></div>
+            foreach (var publication in Model.Publications)
+            {
+                if (currentYear != publication.PublicationDate)
+                {
+                    currentYear = publication.PublicationDate;
+                    <div><b>@currentYear</b></div>
+                }
+
+            <div class="col-md-12 bs-callout bs-callout-primary">
+                <div>
+                    <p>
+                        <small class="category">Category: @publication.Category</small>
+                    </p>
+                    <div>
+                        <b>@publication.Authors. </b>
+                        <i>@(publication.Title != null ? publication.Title + ". " : string.Empty)</i>
+                        <i>@(publication.Book != null ? publication.Book + ". " : string.Empty)</i>
+                        <i>@(publication.Conference != null ? publication.Conference + ", " : string.Empty)</i>
+                        <i>@(publication.Journal != null ? publication.Journal + ", " : string.Empty)</i>
+                        @(publication.ApplicationNumber != null ? "Application Number " + publication.ApplicationNumber + ", " : string.Empty)
+                        @(publication.Volume != null ? "Volume " + publication.Volume + ", " : string.Empty)
+                        @(publication.Issue != null ? "Issue " + publication.Issue + ", " : string.Empty) 
+                        @(publication.PatentNumber != null ? "Patent Numer " + publication.PatentNumber + ", " : string.Empty)
+                        @(publication.PatentOffice != null ? "Patent Office " + publication.PatentOffice + ", " : string.Empty)
+                        @(publication.Pages != null ? "Pages " + publication.Pages + ", " : string.Empty)
+                        @(publication.Publisher != null ? publication.Publisher + ", " : string.Empty)
+                        @(publication.Source != null ? "Source " + publication.Source + ", " : string.Empty)
+                        @(publication.PublicationDate != null ? publication.PublicationDate + ". " : string.Empty)
+                        
+                    </div>
+
+                </div>
+                <div>
+                    @if (publication.ImageName != null)
+                {
+                        <div class="pull-right">
+                            <img style="max-height : 200px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = publication.ImageName })>
+                        </div>
+                    }
+                </div>
+                @if (publication.Abstract != null)
+                {
+                    <div>
+                        <p>Abstract</p>
+                        @publication.Abstract
+                    </div>
+                }
+                @if (publication.Link != null)
+                {
+                    <p>More at <a href="@publication.Link" target="_blank">@(publication.LinkText != null ? publication.LinkText : publication.Link)</a></p>
+                }
+                
+                    @if (publication.KeyWordsList.Count > 0)
+                    {
+                        <p>
+                            <small>Tags:</small>
+                        @foreach (var key in publication.KeyWordsList)
+                        {
+                            <span class="label ai-label">@key</span>
+                        }
+                        </p>
+                    }
+                
+
+                @if (publication.UploadName != null)
+                {
+                    <span> 
+                        <i class="fa fa-download"></i> 
+                        <a href='@Path.Combine("/uploads", publication.UploadName)' target="_blank">Download</a>
+                    </span>
+                }   
+                <small class="post-date pull-right">
+                    <i class="fa fa-clock-o"></i>
+                    <span class="from-now" data-time="@Convert.ToDateTime(publication.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                </small>
+            </div>
+        }
+        }
+    </div>
+</div>
+<script>
+    var urlSearchPublications = "@Url.Action("Publications","Home")"
+</script>

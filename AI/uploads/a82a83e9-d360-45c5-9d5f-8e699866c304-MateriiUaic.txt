@@ -1,0 +1,27 @@
+Anul I
+
+1.Arhitectura calculatoarelor şi sisteme de operare - am facut asm
+2.Introducere în programare - cam ce am facut la info in liceu la un nivel mai avansat un pic
+3.Structuri de date
+4.Logică pentru informatică
+5.Matematică
+
+6.Fundamente algebrice ale informaticii 
+7.Programare orientată-obiect - concepte oop, clase..
+8.Proiectarea algoritmilor - Arbori, Complexitati, Algoritmi din geometria computationala, Algoritmi de cautare peste siruri, Greedy
+9.Sisteme de operare
+10.Probabilităţi şi statistică
+
+Anul II
+
+1.Algoritmica grafurilor
+2.Introducere în criptografie - A fost optional (S-au facut algoritmi de criptare/decriptare)
+3.Limbaje formale, automate şi compilatoare
+4.Retele de calculatoarelor (Network computing)
+5.Baze de date
+
+6.Ingineria programarii - Metode de testare, Diagrame Uml, Design Pattern
+7.Modele continue şi Matlab - si asta a fost optional
+8.Practică SGBD - Continuarea Bazelor de date mai aprofundat
+9.Tehnologii Web - html
+10.Programare avansata - Java

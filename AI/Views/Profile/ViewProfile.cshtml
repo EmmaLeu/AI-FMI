@@ -1,0 +1,34 @@
+﻿@model AI.Models.UserInfoVM
+
+@{
+    ViewBag.Title = "ViewProfile";
+}
+
+<div class="bs-callout bs-callout-primary">
+    <div>
+        <img class="img-responsive img-thumbnail profile-picture" src=@Url.Action("GetProfilePicture", "Profile", new { id = Model.ImageID })>
+    </div>
+    <div class="list-group">
+        <div class="list-group-item">@Model.Title @Model.FirstName @Model.LastName 'profile</div>
+        @if (Model.Rank != null)
+        {
+            <div class="list-group-item">@Model.Rank</div>
+        }
+        @if (Model.CurrentInsitution != null)
+        {
+            <div class="list-group-item">Currently Working Institution: @Model.CurrentInsitution</div>
+        }
+        @if (Model.InterestAreas != null)
+        {
+            <div class="list-group-item">Interest Areas: @Model.InterestAreas</div>
+        }
+        @if(Model.Nationality != null)
+        {
+            <div class="list-group-item">Nationality: @Model.Nationality</div>
+        }
+        @if (Model.ContactEmail != null)
+        {
+            <div class="list-group-item">Contact @Model.FirstName at: @Model.ContactEmail</div>
+        }
+    </div>
+</div>

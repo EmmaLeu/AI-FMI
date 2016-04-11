@@ -1,0 +1,174 @@
+﻿body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Set padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+.publication-item input, .publication-item select, .publication-item textarea, .software-item input
+{
+    max-width: 800px;
+}
+.publication-nav {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.navbar-fixed-top {
+    max-height: 50px !important;
+}
+
+/**/
+img.profile-picture {
+    max-width: 150px;
+    max-height: 150px;
+}
+
+.bs-callout {
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    border-left-width: 5px;
+    border-radius: 3px;
+}
+.bs-callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+.bs-callout p:last-child {
+    margin-bottom: 0;
+}
+.bs-callout code {
+    border-radius: 3px;
+}
+.bs-callout+.bs-callout {
+    margin-top: -5px;
+}
+.bs-callout-default {
+    border-left-color: #777;
+}
+.bs-callout-default h4 {
+    color: #777;
+}
+.bs-callout-primary {
+    border-left-color: #428bca;
+}
+.bs-callout-primary h4 {
+    color: #428bca;
+}
+.bs-callout-success {
+    border-left-color: #5cb85c;
+}
+.bs-callout-success h4 {
+    color: #5cb85c;
+}
+
+
+img.img-small {
+    max-height: 40px;
+    max-width: 40px;
+}
+
+.modal-confirm {
+    max-width: 350px !important;
+    min-width: 300px !important;
+    text-align: center;
+}
+.modal-dialog {
+    text-align: center!important;
+}
+.publication-container {
+    max-width: 400px;
+    max-height: 400px;
+    min-height: 200px;
+    float: left;
+}
+
+.navbar-inverse {
+    background-color: #14213D;
+    border-color: #000000;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #E5E5E5;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #E5E5E5;
+}
+
+.ai-btn-default {
+
+    border-width: 2px;
+    color: #14213D;
+    border-color: #14213D;
+    background-color: transparent;
+    font-weight: bold;
+}
+
+.ai-btn-warning {
+    border-width: 2px;
+    border-color: #14213D;
+    color: #ffffff;
+    background-color: #14213D;
+    font-weight: bold;
+}
+
+.ai-btn-warning:hover, .ai-btn-warning:focus, .ai-btn-warning:visited {
+    color: #E5E5E5;
+}
+
+.ai-vertical-align {
+    position: relative;
+    -webkit-transform: translateY(50%); 
+    -ms-transform: translateY(50%); 
+    transform: translateY(50%);
+}
+.ai-search-box {
+    height: 36px;
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+.ai-search-icon {
+    text-align: center;
+    background-color: #14213D;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+    height: 36px;
+}
+.ai-label {
+    background-color: #E5E5E5;
+    color: #14213D;
+}
+#publication-header {
+
+}
+
+.remove-award, .remove-news {
+
+    color: #14213D;
+}
+
+.edit-award, .edit-news {
+    color: #FCA311;
+}
+
+.post-date, .category {
+    opacity: 0.6;
+}

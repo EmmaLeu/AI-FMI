@@ -1,0 +1,14 @@
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\bin\Debug\BL.dll.config
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\bin\Debug\BL.dll
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\bin\Debug\BL.pdb
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\bin\Debug\BE.dll
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\bin\Debug\DA.dll
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\bin\Debug\EntityFramework.dll
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\bin\Debug\BE.pdb
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\bin\Debug\DA.pdb
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\bin\Debug\EntityFramework.xml
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\obj\Debug\BL.csprojResolveAssemblyReference.cache
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\obj\Debug\BL.dll
+C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BL\obj\Debug\BL.pdb
