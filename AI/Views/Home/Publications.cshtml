@@ -6,7 +6,7 @@
 <div id="publication-content-big">
     <div class="row publication-header">
         <h3 class="col-md-8">Publications
-            @if (Model.SearchText != null)
+            @if (!Model.SearchText.IsEmpty())
             {
                 <div class="btn btn-default">@Model.SearchText <i class="fa fa-times" id="remove-filters"></i></div>
             }
@@ -57,7 +57,7 @@
                 </div>
                 <div>
                     @if (publication.ImageName != null)
-                {
+                    {
                         <div class="pull-right">
                             <img style="max-height : 200px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = publication.ImageName })>
                         </div>
@@ -65,6 +65,7 @@
                 </div>
                 @if (publication.Abstract != null)
                 {
+                    <br/>
                     <div>
                         <p>Abstract</p>
                         @publication.Abstract

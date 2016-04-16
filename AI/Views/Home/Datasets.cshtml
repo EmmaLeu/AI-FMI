@@ -1,7 +1,56 @@
 ﻿
-@{
-    ViewBag.Title = "Datasets";
-}
+@model IEnumerable<AI.Models.SoftwareDatasetVM>
 
-<h3>No Datasets to display yet.</h3>
+    @{
+        ViewBag.Title = "Datasets";
+    }
+        <div id="datasets-content-big">
+            <h3>Datasets</h3>
+            <div id="datasets-content">
+                @if (Model.Count() > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <div class="col-md-12 bs-callout bs-callout-primary">
+                            <div><b>@(item.Title != null ? item.Title : string.Empty)</b></div>
+                            <div>Authors: @item.Authors </div>
+                            <div>
+                                @if (item.ImageName != null)
+                                {
+                                    <div class="pull-right">
+                                        <img style="max-height : 200px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = item.ImageName })>
+                                    </div>
+                                }
+                            </div>
+                            @if (item.Description != null)
+                    { <br />
+                    <div>
+                        <p>Description</p>
+                        @item.Description
+                    </div>
+                            }
+                            @if (item.Link != null)
+                    {
+                                <p><a href="@item.Link" target="_blank">@(item.LinkText != null ? item.LinkText : item.Link)</a></p>
+                            }
 
+
+                            @if (item.UploadName != null)
+                    {
+                                <span>
+                                    <i class="fa fa-download"></i>
+                                    <a href='@Path.Combine("/uploads", item.UploadName)' target="_blank">Download</a>
+                                </span>
+                            }
+                            <small class="post-date pull-right">
+                                <i class="fa fa-clock-o"></i>
+                                <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                            </small>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <script>
+    var urlSearchPublications = "@Url.Action("Publications","Home")"
+        </script>

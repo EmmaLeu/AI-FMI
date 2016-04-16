@@ -22,6 +22,11 @@ namespace BL
             return repository.SoftwareDatasetRepo.GetLatestItems(howMany, type).ToList();
         }
 
+        public List<SoftwareDataset> GetSoftwareDatasets(bool type)
+        {
+            return repository.SoftwareDatasetRepo.GetSoftwareDatasets(type);
+        }
+
         public void AddSoftwareDataset(SoftwareDataset sd)
         {
             repository.SoftwareDatasetRepo.AddSoftwareDataset(sd);

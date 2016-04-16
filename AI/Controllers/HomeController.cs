@@ -74,8 +74,8 @@ namespace AI.Controllers
             GetLatestPublications(recentUpdates);
             GetLatestNews(recentUpdates);
             GetLatestAwards(recentUpdates);
-            //GetLatestDatasets(recentUpdates);
             GetLatestSoftware(recentUpdates);
+            GetLatestDatasets(recentUpdates);
 
             return View(recentUpdates);
         }
@@ -143,6 +143,7 @@ namespace AI.Controllers
                     CounterDownloads = i.CounterDownloads,
                     CounterLinkViews = i.CounterLinkViews,
                     Link = i.Link,
+                    LinkText = i.LinkText,
                     Title = i.Title,
                     CreationDate = i.CreationDate
                 }).ToList();
@@ -150,7 +151,7 @@ namespace AI.Controllers
 
         private void GetLatestDatasets(RecentUpdatesVM recentUpdates)
         {
-            recentUpdates.Software = Services.SoftwareDatasetService.GetLatestItems(5, true).Select(
+            recentUpdates.Datasets = Services.SoftwareDatasetService.GetLatestItems(5, true).Select(
                 i => new SoftwareDatasetVM()
                 {
                     Authors = i.Authors,
@@ -236,13 +237,45 @@ namespace AI.Controllers
         [HttpGet]
         public ActionResult Software()
         {
-            return View();
+            var software = Services.SoftwareDatasetService
+                .GetSoftwareDatasets(true).Select(
+                i => new SoftwareDatasetVM()
+                {
+                    Authors = i.Authors,
+                    Description = i.Description,
+                    CounterDownloads = i.CounterDownloads,
+                    CounterLinkViews = i.CounterLinkViews,
+                    Link = i.Link,
+                    LinkText = i.LinkText,
+                    Title = i.Title,
+                    CreationDate = i.CreationDate,
+                    ImageName = i.Images.Select(u => u.Name).FirstOrDefault(),
+                    UploadName = (i.Upload != null ? i.Upload.FileName : null)
+                }).ToList();
+
+            return View(software);
         }
 
         [HttpGet]
         public ActionResult Datasets()
         {
-            return View();
+            var dataset = Services.SoftwareDatasetService
+                .GetSoftwareDatasets(false).Select(
+                i => new SoftwareDatasetVM()
+                {
+                    Authors = i.Authors,
+                    Description = i.Description,
+                    CounterDownloads = i.CounterDownloads,
+                    CounterLinkViews = i.CounterLinkViews,
+                    Link = i.Link,
+                    LinkText = i.LinkText,
+                    Title = i.Title,
+                    CreationDate = i.CreationDate,
+                    ImageName = i.Images.Select(u => u.Name).FirstOrDefault(),
+                    UploadName = (i.Upload != null ? i.Upload.FileName : null)
+                }).ToList();
+
+            return View(dataset);
         }
 
         [HttpGet]

@@ -145,6 +145,7 @@ namespace AI.Controllers
         public ActionResult AddSoftware()
         {
             var softwareDataset = new SoftwareDatasetVM();
+            softwareDataset.Type = false;
             return View(softwareDataset);
         }
 
@@ -152,11 +153,13 @@ namespace AI.Controllers
         public ActionResult AddDataset()
         {
             var softwareDataset = new SoftwareDatasetVM();
+            softwareDataset.Type = true;
             return View(softwareDataset);
         }
 
         //this action adds both Software and Datasets
         [HttpPost]
+        [Authorize]
         public ActionResult AddSoftware(SoftwareDatasetVM sd)
         {
             if (Session.CurrentUser != null)
@@ -270,27 +273,27 @@ namespace AI.Controllers
             var publicationToAdd = new Publication()
             {
                 UserID = userID,
-                Title = publication.Title,
-                Authors = publication.Authors,
+                Title = publication.Title != null ? publication.Title.Trim() : null,
+                Authors = publication.Authors != null ? publication.Authors.Trim() : null,
                 PublicationYear = Convert.ToInt32(publication.PublicationDate),
                 CreationDate = DateTime.Now,
-                Category = category,
-                Journal = publication.Journal,
-                Conference = publication.Conference,
-                Book = publication.Book,
-                Volume = publication.Volume,
-                Institution = publication.Institution,
-                PatentOffice = publication.PatentOffice,
-                PatentNumber = publication.PatentNumber,
-                ApplicationNumber = publication.ApplicationNumber,
-                Issue = publication.Issue,
-                Pages = publication.Pages,
-                Publisher = publication.Publisher,
-                KeyWords = publication.KeyWords,
-                Abstract = publication.Abstract,
-                Source = publication.Source,
-                Link = publication.Link,
-                LinkText = publication.LinkText
+                Category = category != null ? category.Trim() : null,
+                Journal = publication.Journal != null ? publication.Journal.Trim() : null,
+                Conference = publication.Conference != null ? publication.Conference.Trim() : null,
+                Book = publication.Book != null ? publication.Book.Trim() : null,
+                Volume = publication.Volume != null ? publication.Volume.Trim() : null,
+                Institution = publication.Institution != null ? publication.Institution.Trim() : null,
+                PatentOffice = publication.PatentOffice != null ? publication.PatentOffice.Trim() : null,
+                PatentNumber = publication.PatentNumber != null ? publication.PatentNumber.Trim() : null,
+                ApplicationNumber = publication.ApplicationNumber != null ? publication.ApplicationNumber.Trim() : null,
+                Issue = publication.Issue != null ? publication.Issue.Trim() : null,
+                Pages = publication.Pages != null ? publication.Pages.Trim() : null,
+                Publisher = publication.Publisher != null ? publication.Publisher.Trim() : null,
+                KeyWords = publication.KeyWords != null ? publication.KeyWords.Trim() : null,
+                Abstract = publication.Abstract != null ? publication.Abstract.Trim() : null,
+                Source = publication.Source != null ? publication.Source.Trim() : null,
+                Link = publication.Link != null ? publication.Link.Trim() : null,
+                LinkText = publication.LinkText != null ? publication.LinkText.Trim() : null
             };
 
             var image = publication.Image;
@@ -343,13 +346,13 @@ namespace AI.Controllers
             var sdToAdd = new SoftwareDataset()
             {
                 UserID = userID,
-                Title = sd.Title,
-                Authors = sd.Authors,
+                Title = sd.Title != null ? sd.Title.Trim() : null,
+                Authors = sd.Authors != null ? sd.Authors.Trim() : null,
                 CreationDate = DateTime.Now,
                 Type = sd.Type,
-                Link = sd.Link,
-                LinkText = sd.LinkText,
-                Description = sd.Description
+                Link = sd.Link != null ? sd.Link.Trim() : null,
+                LinkText = sd.LinkText != null ? sd.LinkText.Trim() : null,
+                Description = sd.Description !=null ? sd.Description.Trim() : null
             };
 
             var image = sd.Image;

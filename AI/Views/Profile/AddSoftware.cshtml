@@ -6,11 +6,12 @@
         <li role="presentation" id="add-dataset">@Html.ActionLink("Dataset", "AddDataset")</li>
     </ul>
 </div>
-@using (Html.BeginForm("AddSoftware", "Profile", new { type = 0 }, FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("AddSoftware", "Profile", FormMethod.Post, htmlAttributes: new { enctype = "multipart/form-data" }))
 {
     <div class="form-horizontal software-item">
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Type)
         <div class="form-group">
             @Html.LabelFor(model => model.Upload, "Document:", htmlAttributes: new { @class = "control-label col-md-2" })
             <input class="btn-primary" type="file" name="Upload" />

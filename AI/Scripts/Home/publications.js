@@ -18,19 +18,21 @@
     $(".publication-header").on("click", "#btn-search-publications", function () {
         $self = $(this);
         $searchText = $("#in-search-publications").val();
-        $isSearch = true;
-        $.ajax({
-            type: "GET",
-            url: urlSearchPublications,
-            data:
-            {
-                searchText: $searchText,
-                isSearch: $isSearch
-            }
-        }).done(function (resp) {
+        if ($searchText && $searchText.trim()) {
+            $isSearch = true;
+            $.ajax({
+                type: "GET",
+                url: urlSearchPublications,
+                data:
+                {
+                    searchText: $searchText,
+                    isSearch: $isSearch
+                }
+            }).done(function (resp) {
 
-            $(".body-content").replaceWith(resp);
-        });
+                $(".body-content").replaceWith(resp);
+            });
+        }
     });
 
     $(".publication-header").on("click", "#remove-filters", function () {

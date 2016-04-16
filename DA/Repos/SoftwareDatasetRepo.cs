@@ -26,6 +26,15 @@ namespace DA.Repos
             return items != null? items : new List<SoftwareDataset>();
         }
 
+        public List<SoftwareDataset> GetSoftwareDatasets(bool type)
+        {
+            var items = context.Software
+                .Where(i => i.Type == type)
+                .ToList();
+
+            return items != null ? items : new List<SoftwareDataset>();
+        }
+
         public void AddSoftwareDataset(SoftwareDataset sd)
         {
             var newSD = context.Software.Add(sd);

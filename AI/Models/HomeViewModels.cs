@@ -83,18 +83,18 @@ namespace AI.Models
 
     public class SoftwareDatasetVM
     {
-        [Key]
         public int ID { get; set; }
 
         public int UserID { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Title is required.")]
         public string Title { get; set; }
 
         public string Description { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
 
+        [Required(ErrorMessage = "Authors field is required.")]
         public string Authors { get; set; }
 
         public long CounterLinkViews { get; set; }
