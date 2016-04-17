@@ -46,6 +46,18 @@ namespace DA.Repos
                 .FirstOrDefault();
         }
 
+        public User GetUserWithProfileInfo(int userId)
+        {
+            return context
+                .Users
+                .Include(u => u.EducationList)
+                .Include(u => u.ProfilePicture)
+                .Include(u => u.Publications)
+                .Include(u => u.SoftwareDatasets)
+                .Where(u => u.UserID == userId)
+                .FirstOrDefault();
+        }
+
         public User UpdateUserInformation(User user)
         {
             var userToUpdate = GetUserWithEducation(user.UserID);
@@ -100,11 +112,13 @@ namespace DA.Repos
                 .ThenBy(u => u.FirstName)
                 .ToList();
         }
+
         public bool IsEmailUnique(string email)
         {
             return context.Users
                 .All(u => u.LoginEmail != email);
         }
+
         public List<Role> GetRoles()
         {
             return context.Roles

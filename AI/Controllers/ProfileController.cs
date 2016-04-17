@@ -102,15 +102,75 @@ namespace AI.Controllers
                 ContactEmail = user.ContactEmail,
                 CurrentInsitution = user.CurrentInsitution,
                 EducationList = user.EducationList.Select(i => new EducationVM()
-                {
-                    EducationID = i.EducationID,
-                    StartDate = i.StartDate,
-                    EndDate = i.EndDate,
-                    UserID = i.UserID,
-                    Institution = i.Institution,
-                    Activities = i.Activities
+                                {
+                                    EducationID = i.EducationID,
+                                    StartDate = i.StartDate,
+                                    EndDate = i.EndDate,
+                                    UserID = i.UserID,
+                                    Institution = i.Institution,
+                                    Activities = i.Activities
 
-                }).ToList()
+                                }).ToList(),
+                Publications = user.Publications.Select(i => new PublicationVM()
+                                {
+                                    UserID = i.UserID,
+                                    Title = i.Title,
+                                    Authors = i.Authors,
+                                    PublicationDate = Convert.ToString(i.PublicationYear),
+                                    Category = i.Category,
+                                    Journal = i.Journal,
+                                    Conference = i.Conference,
+                                    Book = i.Book,
+                                    Volume = i.Volume,
+                                    Institution = i.Institution,
+                                    PatentOffice = i.PatentOffice,
+                                    PatentNumber = i.PatentNumber,
+                                    ApplicationNumber = i.ApplicationNumber,
+                                    Issue = i.Issue,
+                                    Pages = i.Pages,
+                                    Publisher = i.Publisher,
+                                    KeyWords = i.KeyWords,
+                                    KeyWordsList = (i.KeyWords != null) ? i.KeyWords.Split(',', ' ', '.', ';', '-').ToList() : new List<string>(),
+                                    Abstract = i.Abstract,
+                                    Link = i.Link,
+                                    LinkText = i.LinkText,
+                                    Source = i.Source,
+                                    CreationDate = i.CreationDate,
+                                    ImageName = i.Images.Select(u => u.Name).FirstOrDefault(),
+                                    UploadName = (i.Upload != null ? i.Upload.FileName : null)
+                                })
+                                .OrderByDescending(i => i.PublicationDate)
+                                .ToList(),
+                Software = user.SoftwareDatasets
+                                .Where(i => i.Type == false)
+                                .Select(i => new SoftwareDatasetVM()
+                                {
+                                    Authors = i.Authors,
+                                    Description = i.Description,
+                                    CounterDownloads = i.CounterDownloads,
+                                    CounterLinkViews = i.CounterLinkViews,
+                                    Link = i.Link,
+                                    LinkText = i.LinkText,
+                                    Title = i.Title,
+                                    CreationDate = i.CreationDate,
+                                    ImageName = i.Images.Select(u => u.Name).FirstOrDefault(),
+                                    UploadName = (i.Upload != null ? i.Upload.FileName : null)
+                                }).ToList(),
+                Datasets = user.SoftwareDatasets
+                                .Where(i => i.Type == true)
+                                .Select(i => new SoftwareDatasetVM()
+                                {
+                                    Authors = i.Authors,
+                                    Description = i.Description,
+                                    CounterDownloads = i.CounterDownloads,
+                                    CounterLinkViews = i.CounterLinkViews,
+                                    Link = i.Link,
+                                    LinkText = i.LinkText,
+                                    Title = i.Title,
+                                    CreationDate = i.CreationDate,
+                                    ImageName = i.Images.Select(u => u.Name).FirstOrDefault(),
+                                    UploadName = (i.Upload != null ? i.Upload.FileName : null)
+                                }).ToList(),
             };
                 return View(userInfo);
 

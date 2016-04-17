@@ -15,6 +15,7 @@ namespace DA.Repos
         {
             this.context = context;
         }
+
         public List<Award> GetAwards()
         {
             return context.Awards
@@ -56,6 +57,7 @@ namespace DA.Repos
             context.Awards.Remove(award);
             context.SaveChanges();
         }
+
         public List<Award> GetLatestAwards(int howMany)
         {
             var list = context.Awards

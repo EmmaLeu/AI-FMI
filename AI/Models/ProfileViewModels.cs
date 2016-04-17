@@ -11,6 +11,14 @@ namespace AI.Models
 {
     public class UserInfoVM
     {
+        public UserInfoVM()
+        {
+            EducationList = new List<EducationVM>();
+            Publications = new List<PublicationVM>();
+            Software = new List<SoftwareDatasetVM>();
+            Datasets = new List<SoftwareDatasetVM>();
+        }
+
         [Key]
         public int UserID { get; set; }
 
@@ -43,6 +51,12 @@ namespace AI.Models
         public string CurrentInsitution { get; set; }
 
         public List<EducationVM> EducationList { get; set; }
+
+        public List<PublicationVM> Publications { get; set; }
+
+        public List<SoftwareDatasetVM> Software { get; set; }
+
+        public List<SoftwareDatasetVM> Datasets { get; set; }
     }
 
     public class EducationVM
