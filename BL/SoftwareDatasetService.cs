@@ -36,5 +36,15 @@ namespace BL
         {
             return repository.SoftwareDatasetRepo.DeleteSoftwareDataset(sdId);
         }
+
+        public SoftwareDataset GetSoftwareDatasetById(int sdId)
+        {
+            return repository.SoftwareDatasetRepo.GetSoftwareDatasetById(sdId);
+        }
+
+        public void UpdateSoftwareDataset(SoftwareDataset sd, bool deleteImage, bool deleteFile)
+        {
+            repository.SoftwareDatasetRepo.UpdateSoftwareDataset(sd, deleteImage, deleteFile);
+        }
     }
 }

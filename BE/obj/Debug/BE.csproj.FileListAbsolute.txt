@@ -5,6 +5,5 @@ C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BE\bin\Debug\EntityFr
 C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BE\bin\Debug\EntityFramework.SqlServer.dll
 C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BE\bin\Debug\EntityFramework.xml
 C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BE\bin\Debug\EntityFramework.SqlServer.xml
-C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BE\obj\Debug\BE.csprojResolveAssemblyReference.cache
 C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BE\obj\Debug\BE.dll
 C:\Users\Emma\Documents\Visual Studio 2015\Projects\AI-FMI\BE\obj\Debug\BE.pdb

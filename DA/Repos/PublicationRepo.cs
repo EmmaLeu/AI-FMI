@@ -83,6 +83,7 @@ namespace DA.Repos
                     .Where(i => i.PublicationID == publicationId)
                     .FirstOrDefault();
 
+                var images = context.Images.Where(i => i.PublicationID == publication.PublicationID).ToList();
                 if (publication != null)
                 {
                     if (publication.Upload != null)
@@ -90,9 +91,9 @@ namespace DA.Repos
                         context.Uploads.Remove(publication.Upload);
                     }
 
-                    if (publication.Images != null)
+                    if (images != null)
                     {
-                        context.Images.RemoveRange(publication.Images);
+                        context.Images.RemoveRange(images);
                     }
 
                     deletedPublication = context.Publications.Remove(publication);
@@ -106,6 +107,94 @@ namespace DA.Repos
             }
 
             return deletedPublication;
+        }
+
+        public Publication GetPublicationById(int publicationId)
+        {
+            var publication = new Publication();
+
+            try
+            {
+                publication = context.Publications
+                    .Include(i => i.Upload)
+                    .Include(i => i.Images)
+                    .Where(i => i.PublicationID == publicationId)
+                    .FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return publication;
+        }
+
+        public void UpdatePublication(Publication publication, bool deleteImage, bool deleteUpload)
+        {
+                var pubToUpdate = context.Publications
+                    .Include(i => i.Images)
+                    .Include(i => i.Upload)
+                    .Where(i => i.PublicationID == publication.PublicationID)
+                    .FirstOrDefault();
+
+                var images = context.Images
+                    .Where(i => i.PublicationID == pubToUpdate.PublicationID)
+                    .ToList();
+
+                if(pubToUpdate != null)
+                {
+                    pubToUpdate.Title = publication.Title;
+                    pubToUpdate.Authors = publication.Authors;
+                    pubToUpdate.PublicationYear = publication.PublicationYear;
+                    pubToUpdate.Category = publication.Category;
+                    pubToUpdate.Journal = publication.Journal;
+                    pubToUpdate.Conference = publication.Conference;
+                    pubToUpdate.Book = publication.Book;
+                    pubToUpdate.Volume = publication.Volume;
+                    pubToUpdate.Institution = publication.Institution;
+                    pubToUpdate.PatentOffice = publication.PatentOffice;
+                    pubToUpdate.PatentNumber = publication.PatentNumber;
+                    pubToUpdate.ApplicationNumber = publication.ApplicationNumber;
+                    pubToUpdate.Issue = publication.Issue;
+                    pubToUpdate.Pages = publication.Pages;
+                    pubToUpdate.Publisher = publication.Publisher;
+                    pubToUpdate.KeyWords = publication.KeyWords;
+                    pubToUpdate.Abstract = publication.Abstract;
+                    pubToUpdate.Source = publication.Source;
+                    pubToUpdate.Link = publication.Link;
+                    pubToUpdate.LinkText = publication.LinkText;
+
+                if (pubToUpdate.Upload != null && deleteUpload == true)
+                {
+                    context.Uploads.Remove(pubToUpdate.Upload);
+                }
+
+                if (publication.Upload != null)
+                {
+                    var upload = context.Uploads.Add(publication.Upload);
+                    pubToUpdate.Upload = upload;
+                }
+
+                if (images != null && (deleteImage == true || (publication.Images!=null && publication.Images.Count > 0)))
+                {
+                    foreach (var image in images)
+                    {
+                        context.Images.Remove(image);
+                    }
+                }
+
+                if (publication.Images != null && publication.Images.Count > 0)
+                {
+                    foreach (var pubImage in publication.Images)
+                    {
+                        var newImage = context.Images.Add(pubImage);
+                        newImage.Publication = pubToUpdate;
+                    }
+
+                }
+            }
+
+            context.SaveChanges();
         }
     }
 }

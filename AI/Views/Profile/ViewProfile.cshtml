@@ -68,7 +68,7 @@
                                     <i class="fa fa-trash fa-2x pull-right remove-publication" data-id=@publication.PublicationID></i>
                                 </small>
                                 <small>
-                                    <i class="fa fa-pencil-square fa-2x pull-right edit-publication" data-id="@publication.PublicationID"></i>
+                                    <a href="@Url.Action("UpdatePublication", "Profile", new { publicationId = @publication.PublicationID })"><i class="fa fa-pencil-square fa-2x pull-right edit-publication" data-id="@publication.PublicationID"></i></a>
                                 </small>
                                 <div class="modal fade delete-publication-modal" data-backdrop="true" role="dialog">
                                     <div class="modal-dialog modal-sm">
@@ -115,7 +115,7 @@
                         @if (publication.ImageName != null)
                         {
                             <div class="pull-right">
-                                <img style="max-height : 200px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = publication.ImageName })>
+                                <img style="max-height : 180px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = publication.ImageName })>
                             </div>
                         }
 
@@ -151,10 +151,12 @@
                                 <a href='@Path.Combine("/uploads", publication.UploadName)' target="_blank">Download</a>
                             </span>
                         }
-                        <small class="post-date pull-right">
-                            <i class="fa fa-clock-o"></i>
-                            <span class="from-now" data-time="@Convert.ToDateTime(publication.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
-                        </small>
+                        <div class="col-md-12">
+                            <small class="post-date pull-right">
+                                <i class="fa fa-clock-o"></i>
+                                <span class="from-now" data-time="@Convert.ToDateTime(publication.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                            </small>
+                        </div>
                     </div>
                 }
             }
@@ -173,9 +175,9 @@
                 <small>
                     <i class="fa fa-trash fa-2x pull-right remove-software" data-id=@item.ID></i>
                 </small>
-                    <small>
-                        <i class="fa fa-pencil-square fa-2x pull-right edit-software" data-id="@item.ID"></i>
-                    </small>
+                <small>
+                    <a href="@Url.Action("UpdateSoftware","Profile", new { sdId = item.ID })"><i class="fa fa-pencil-square fa-2x pull-right edit-software" data-id="@item.ID"></i></a>
+                </small>
                     <div class="modal fade delete-software-modal" data-backdrop="true" role="dialog">
                         <div class="modal-dialog modal-sm">
                             <div class="col-md-3"></div>
@@ -201,7 +203,7 @@
                 @if (item.ImageName != null)
                 {
                     <div class="pull-right">
-                        <img style="max-height : 200px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = item.ImageName })>
+                        <img style="max-height : 180px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = item.ImageName })>
                     </div>
                 }
             </div>
@@ -225,10 +227,12 @@
                     <a href='@Path.Combine("/uploads", item.UploadName)' target="_blank">Download</a>
                 </span>
             }
-            <small class="post-date pull-right">
-                <i class="fa fa-clock-o"></i>
-                <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
-            </small>
+            <div class="col-md-12">
+                <small class="post-date pull-right">
+                    <i class="fa fa-clock-o"></i>
+                    <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                </small>
+            </div>
         </div>
     }
       </div>
@@ -250,7 +254,7 @@
                         <i class="fa fa-trash fa-2x pull-right remove-dataset" data-id=@item.ID></i>
                     </small>
                     <small>
-                        <i class="fa fa-pencil-square fa-2x pull-right edit-dataset" data-id="@item.ID"></i>
+                        <a href="@Url.Action("UpdateSoftware","Profile", new { sdId = item.ID })"><i class="fa fa-pencil-square fa-2x pull-right edit-dataset" data-id="@item.ID"></i></a>
                     </small>
                             <div class="modal fade delete-dataset-modal" data-backdrop="true" role="dialog">
                                 <div class="modal-dialog modal-sm">
@@ -277,7 +281,7 @@
                     @if (item.ImageName != null)
                 {
                         <div class="pull-right">
-                            <img style="max-height : 200px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = item.ImageName })>
+                            <img style="max-height : 180px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = item.ImageName })>
                         </div>
                     }
                 </div>
@@ -301,10 +305,12 @@
                         <a href='@Path.Combine("/uploads", item.UploadName)' target="_blank">Download</a>
                     </span>
                 }
-                <small class="post-date pull-right">
-                    <i class="fa fa-clock-o"></i>
-                    <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
-                </small>
+                <div class="col-md-12">
+                    <small class="post-date pull-right">
+                        <i class="fa fa-clock-o"></i>
+                        <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                    </small>
+                </div>
             </div>
             }
             </div>

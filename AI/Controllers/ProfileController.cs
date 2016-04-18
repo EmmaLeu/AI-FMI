@@ -17,7 +17,7 @@ namespace AI.Controllers
     {
         // GET: Profile/Edit/5
         [HttpGet]
-        public ActionResult Edit(int? id=null)
+        public ActionResult Edit(int? id = null)
         {
             if (Session.CurrentUser != null)
             {
@@ -53,7 +53,7 @@ namespace AI.Controllers
             }
             return RedirectToAction("Login", "Account");
         }
-       
+
         // POST: Profile/Edit/5
         [HttpPost]
         public ActionResult Edit(UserInfoVM user)
@@ -83,8 +83,8 @@ namespace AI.Controllers
                 Session.CurrentUser.Rank = EnumHelp.GetDescription(userToUpdate.Rank);
                 return RedirectToAction("Edit");
             }
-      
-               return View(user);
+
+            return View(user);
         }
 
         [HttpGet]
@@ -102,44 +102,44 @@ namespace AI.Controllers
                 ContactEmail = user.ContactEmail,
                 CurrentInsitution = user.CurrentInsitution,
                 EducationList = user.EducationList.Select(i => new EducationVM()
-                                {
-                                    EducationID = i.EducationID,
-                                    StartDate = i.StartDate,
-                                    EndDate = i.EndDate,
-                                    UserID = i.UserID,
-                                    Institution = i.Institution,
-                                    Activities = i.Activities
+                {
+                    EducationID = i.EducationID,
+                    StartDate = i.StartDate,
+                    EndDate = i.EndDate,
+                    UserID = i.UserID,
+                    Institution = i.Institution,
+                    Activities = i.Activities
 
-                                }).ToList(),
+                }).ToList(),
                 Publications = user.Publications.Select(i => new PublicationVM()
-                                {
-                                    PublicationID = i.PublicationID,
-                                    UserID = i.UserID,
-                                    Title = i.Title,
-                                    Authors = i.Authors,
-                                    PublicationDate = Convert.ToString(i.PublicationYear),
-                                    Category = i.Category,
-                                    Journal = i.Journal,
-                                    Conference = i.Conference,
-                                    Book = i.Book,
-                                    Volume = i.Volume,
-                                    Institution = i.Institution,
-                                    PatentOffice = i.PatentOffice,
-                                    PatentNumber = i.PatentNumber,
-                                    ApplicationNumber = i.ApplicationNumber,
-                                    Issue = i.Issue,
-                                    Pages = i.Pages,
-                                    Publisher = i.Publisher,
-                                    KeyWords = i.KeyWords,
-                                    KeyWordsList = (i.KeyWords != null) ? i.KeyWords.Split(',', ' ', '.', ';', '-').ToList() : new List<string>(),
-                                    Abstract = i.Abstract,
-                                    Link = i.Link,
-                                    LinkText = i.LinkText,
-                                    Source = i.Source,
-                                    CreationDate = i.CreationDate,
-                                    ImageName = i.Images.Select(u => u.Name).FirstOrDefault(),
-                                    UploadName = (i.Upload != null ? i.Upload.FileName : null)
-                                })
+                {
+                    PublicationID = i.PublicationID,
+                    UserID = i.UserID,
+                    Title = i.Title,
+                    Authors = i.Authors,
+                    PublicationDate = Convert.ToString(i.PublicationYear),
+                    Category = i.Category,
+                    Journal = i.Journal,
+                    Conference = i.Conference,
+                    Book = i.Book,
+                    Volume = i.Volume,
+                    Institution = i.Institution,
+                    PatentOffice = i.PatentOffice,
+                    PatentNumber = i.PatentNumber,
+                    ApplicationNumber = i.ApplicationNumber,
+                    Issue = i.Issue,
+                    Pages = i.Pages,
+                    Publisher = i.Publisher,
+                    KeyWords = i.KeyWords,
+                    KeyWordsList = (i.KeyWords != null) ? i.KeyWords.Split(',', ' ', '.', ';', '-').ToList() : new List<string>(),
+                    Abstract = i.Abstract,
+                    Link = i.Link,
+                    LinkText = i.LinkText,
+                    Source = i.Source,
+                    CreationDate = i.CreationDate,
+                    ImageName = i.Images.Select(u => u.Name).FirstOrDefault(),
+                    UploadName = (i.Upload != null ? i.Upload.FileName : null)
+                })
                                 .OrderByDescending(i => i.PublicationDate)
                                 .ToList(),
                 Software = user.SoftwareDatasets
@@ -179,9 +179,9 @@ namespace AI.Controllers
                                 .OrderByDescending(i => i.ID)
                                 .ToList(),
             };
-                return View(userInfo);
+            return View(userInfo);
 
-            }
+        }
 
         [HttpGet]
         public ActionResult AddJournal()
@@ -212,9 +212,9 @@ namespace AI.Controllers
         public JsonResult DeletePublication(int publicationId)
         {
             var publication = Services.PublicationService.DeletePublication(publicationId);
-            if(publication != null)
+            if (publication != null)
             {
-                if(publication.Upload != null)
+                if (publication.Upload != null)
                 {
                     var fullPath = Request.MapPath("~/uploads/" + publication.Upload.FileName);
                     if (System.IO.File.Exists(fullPath))
@@ -223,7 +223,7 @@ namespace AI.Controllers
                     }
                 }
 
-                if(publication.Images != null && publication.Images.Count > 0)
+                if (publication.Images != null && publication.Images.Count > 0)
                 {
                     var fullPath = Request.MapPath("~/images/" + publication.Images.FirstOrDefault().Name);
                     if (System.IO.File.Exists(fullPath))
@@ -235,6 +235,104 @@ namespace AI.Controllers
             }
 
             return Json("nok");
+        }
+
+        [HttpGet]
+        public ActionResult UpdatePublication(int publicationId)
+        {
+            var publication = Services.PublicationService.GetPublicationById(publicationId);
+            if (Session.CurrentUser != null && (publication.UserID == Session.CurrentUser.UserID || Session.CurrentUser.IsAdmin))
+            {
+                if (publication != null)
+                {
+                    var model = new PublicationVM()
+                    {
+                        PublicationID = publication.PublicationID,
+                        UserID = publication.UserID,
+                        Title = publication.Title,
+                        Authors = publication.Authors,
+                        PublicationDate = publication.PublicationYear.ToString(),
+                        Category = publication.Category,
+                        Journal = publication.Journal,
+                        Conference = publication.Conference,
+                        CreationDate = publication.CreationDate,
+                        Book = publication.Book,
+                        Volume = publication.Volume,
+                        Institution = publication.Institution,
+                        PatentOffice = publication.PatentOffice,
+                        PatentNumber = publication.PatentNumber,
+                        ApplicationNumber = publication.ApplicationNumber,
+                        Issue = publication.Issue,
+                        Pages = publication.Pages,
+                        Publisher = publication.Publisher,
+                        KeyWords = publication.KeyWords,
+                        Abstract = publication.Abstract,
+                        Source = publication.Source,
+                        Link = publication.Link,
+                        LinkText = publication.LinkText,
+                        ImageName = publication.Images != null ? publication.Images.Select(i => i.Name).FirstOrDefault() : string.Empty,
+                        UploadName = publication.Upload != null ? publication.Upload.FileName : string.Empty
+                    };
+
+
+                    switch (publication.Category)
+                    {
+                        case "Book":
+                            return View("EditBook", model);
+                        case "Chapter":
+                            return View("EditChapter", model);
+                        case "Conference":
+                            return View("EditConference", model);
+                        case "Journal":
+                            return View("EditJournal", model);
+                        case "Other":
+                            return View("EditOther", model);
+                        case "Patent":
+                            return View("EditPatent", model);
+                        case "Thesis":
+                            return View("EditThesis", model);
+                        default:
+                            return RedirectToAction("Publications", "Home");
+                    }
+                }
+            }
+
+            return RedirectToAction("Login", "Account");
+        }
+
+        [HttpPost]
+        public ActionResult UpdatePublication(PublicationVM publication)
+        {
+            if (Session.CurrentUser != null && (Session.CurrentUser.UserID == publication.UserID || Session.CurrentUser.IsAdmin))
+            {
+                if (ModelState.IsValid)
+                {
+                    if (publication.UploadName != string.Empty && ((publication.DeleteFile == true) || publication.Upload != null))
+                    {
+                        var fullPath = Request.MapPath("~/uploads/" + publication.UploadName);
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+
+                    if (publication.ImageName != string.Empty && (publication.DeleteImage == true || (publication.Image != null)))
+                    {
+                        var fullPath = Request.MapPath("~/images/" + publication.ImageName);
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+                }
+                var publicationToUpdate = GetPublicationInformation(publication, publication.Category, Session.CurrentUser.UserID);
+                publicationToUpdate.PublicationID = publication.PublicationID;
+
+                Services.PublicationService.UpdatePublication(publicationToUpdate, publication.DeleteImage, publication.DeleteFile);
+                return RedirectToAction("Publications","Home");
+            }
+
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpPost]
@@ -264,6 +362,75 @@ namespace AI.Controllers
             }
 
             return Json("nok");
+        }
+
+        [HttpGet]
+        public ActionResult UpdateSoftware(int sdId)
+        {
+            var sd = Services.SoftwareDatasetService.GetSoftwareDatasetById(sdId);
+            if (Session.CurrentUser != null && (sd.UserID == Session.CurrentUser.UserID || Session.CurrentUser.IsAdmin))
+            {
+                if (sd != null)
+                {
+                    var model = new SoftwareDatasetVM()
+                    {
+                        ID = sd.ID,
+                        UserID = sd.UserID,
+                        Title = sd.Title,
+                        Authors = sd.Authors,
+                        CreationDate = sd.CreationDate,
+                        Type = sd.Type,
+                        Link = sd.Link,
+                        Description = sd.Description,
+                        LinkText = sd.LinkText,
+                        ImageName = sd.Images != null ? sd.Images.Select(i => i.Name).FirstOrDefault() : string.Empty,
+                        UploadName = sd.Upload != null ? sd.Upload.FileName : string.Empty
+                    };
+                    return View(model);
+                    
+                }
+                return RedirectToAction("Login", "Account");
+            }
+            return Redirect(Request.UrlReferrer.AbsolutePath);
+        }
+
+        [HttpPost]
+        public ActionResult UpdateSoftware(SoftwareDatasetVM sd)
+        {
+            if (Session.CurrentUser != null && (Session.CurrentUser.UserID == sd.UserID || Session.CurrentUser.IsAdmin))
+            {
+                if (ModelState.IsValid)
+                {
+                    if (sd.UploadName != string.Empty && ((sd.DeleteFile == true) || sd.Upload != null))
+                    {
+                        var fullPath = Request.MapPath("~/uploads/" + sd.UploadName);
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+
+                    if (sd.ImageName != string.Empty && (sd.DeleteImage == true || (sd.Image != null)))
+                    {
+                        var fullPath = Request.MapPath("~/images/" + sd.ImageName);
+                        if (System.IO.File.Exists(fullPath))
+                        {
+                            System.IO.File.Delete(fullPath);
+                        }
+                    }
+                }
+                var sdToUpdate = GetSoftwareInformation(sd, Session.CurrentUser.UserID);
+                sdToUpdate.ID = sd.ID;
+
+                Services.SoftwareDatasetService.UpdateSoftwareDataset(sdToUpdate, sd.DeleteImage, sd.DeleteFile);
+                if (sdToUpdate.Type == true)
+                {
+                    return RedirectToAction("Datasets", "Home");
+                }
+                return RedirectToAction("Software", "Home");
+            }
+
+            return RedirectToAction("Login", "Account");
         }
 
         [HttpGet]
@@ -437,7 +604,7 @@ namespace AI.Controllers
                     CreationDate = System.DateTime.Now,
                     ImageType = image.ContentType
                 };
-
+               
                 publicationToAdd.Images.Add(newImage);
             }
 

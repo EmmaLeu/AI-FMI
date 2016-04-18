@@ -153,6 +153,10 @@ namespace AI.Models
         public string ImageName { get; set; }
 
         public string UploadName { get; set; }
+
+        public bool DeleteImage { get; set; }
+
+        public bool DeleteFile { get; set; }
     }
 
     public class PublicationsVM

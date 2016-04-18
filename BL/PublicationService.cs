@@ -37,5 +37,15 @@ namespace BL
         {
             return repository.PublicationRepo.DeletePublication(publicationId);
         }
+
+        public Publication GetPublicationById(int publicationId)
+        {
+            return repository.PublicationRepo.GetPublicationById(publicationId);
+        }
+
+        public void UpdatePublication(Publication publication, bool deleteImage, bool deleteUpload)
+        {
+            repository.PublicationRepo.UpdatePublication(publication, deleteImage, deleteUpload);
+        }
     }
 }

@@ -336,6 +336,14 @@
     <Content Include="Scripts\jquery-2.2.1.min.map" />
     <Content Include="Views\Profile\AddSoftware.cshtml" />
     <Content Include="Views\Profile\AddDataset.cshtml" />
+    <Content Include="Views\Profile\EditBook.cshtml" />
+    <Content Include="Views\Profile\EditChapter.cshtml" />
+    <Content Include="Views\Profile\EditConference.cshtml" />
+    <Content Include="Views\Profile\EditJournal.cshtml" />
+    <Content Include="Views\Profile\EditOther.cshtml" />
+    <Content Include="Views\Profile\EditPatent.cshtml" />
+    <Content Include="Views\Profile\EditThesis.cshtml" />
+    <Content Include="Views\Profile\UpdateSoftware.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

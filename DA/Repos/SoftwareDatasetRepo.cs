@@ -30,31 +30,47 @@ namespace DA.Repos
 
         public List<SoftwareDataset> GetSoftwareDatasets(bool type)
         {
-            var items = context.Software
+            var items = new List<SoftwareDataset>();
+            try
+            {
+                items = context.Software
                 .Where(i => i.Type == type)
                 .OrderByDescending(i => i.ID)
                 .ToList();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
 
-            return items != null ? items : new List<SoftwareDataset>();
+            return items;
         }
 
         public void AddSoftwareDataset(SoftwareDataset sd)
         {
-            var newSD = context.Software.Add(sd);
-
-            if (sd.Upload != null)
+            try
             {
-                var upload = context.Uploads.Add(sd.Upload);
-                newSD.Upload = upload;
-            }
 
-            if (sd.Images != null && sd.Images.Count > 0)
-            {
-                foreach (var image in sd.Images)
+                var newSD = context.Software.Add(sd);
+
+                if (sd.Upload != null)
                 {
-                    var newImg = context.Images.Add(image);
-                    newImg.SoftwareDataset = newSD;
+                    var upload = context.Uploads.Add(sd.Upload);
+                    newSD.Upload = upload;
                 }
+
+                if (sd.Images != null && sd.Images.Count > 0)
+                {
+                    foreach (var image in sd.Images)
+                    {
+                        var newImg = context.Images.Add(image);
+                        newImg.SoftwareDataset = newSD;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                throw ex;
             }
 
             context.SaveChanges();
@@ -96,5 +112,79 @@ namespace DA.Repos
 
             return deletedSD;
         }
+
+        public SoftwareDataset GetSoftwareDatasetById(int sdId)
+        {
+            var sd = new SoftwareDataset();
+            try
+            {
+                sd = context.Software
+                    .Include(i => i.Images)
+                    .Include(i => i.Upload)
+                    .Where(i => i.ID == sdId)
+                    .FirstOrDefault();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+            return sd;
+        }
+
+        public void UpdateSoftwareDataset(SoftwareDataset sd, bool deleteImage, bool deleteUpload)
+        {
+            var sdToUpdate = context.Software
+                .Include(i => i.Images)
+                .Include(i => i.Upload)
+                .Where(i => i.ID == sd.ID)
+                .FirstOrDefault();
+
+            var images = context.Images
+                .Where(i => i.SoftwareDatasetID == sdToUpdate.ID)
+                .ToList();
+
+            if (sdToUpdate != null)
+            {
+                sdToUpdate.Title = sd.Title;
+                sdToUpdate.Authors = sd.Authors;
+                sdToUpdate.Type = sd.Type;
+                sdToUpdate.Description = sd.Description;
+                sdToUpdate.Link = sd.Link;
+                sdToUpdate.LinkText = sd.LinkText;
+
+                if (sdToUpdate.Upload != null && deleteUpload == true)
+                {
+                    context.Uploads.Remove(sdToUpdate.Upload);
+                }
+
+                if (sd.Upload != null)
+                {
+                    var upload = context.Uploads.Add(sd.Upload);
+                    sdToUpdate.Upload = upload;
+                }
+
+                if (images != null && (deleteImage == true || (sd.Images != null && sd.Images.Count > 0)))
+                {
+                    foreach (var image in images)
+                    {
+                        context.Images.Remove(image);
+                    }
+                }
+
+                if (sd.Images != null && sd.Images.Count > 0)
+                {
+                    foreach (var pubImage in sd.Images)
+                    {
+                        var newImage = context.Images.Add(pubImage);
+                        newImage.SoftwareDataset = sdToUpdate;
+                    }
+
+                }
+            }
+
+            context.SaveChanges();
+        }
     }
 }
+

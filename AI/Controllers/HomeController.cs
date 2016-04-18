@@ -80,91 +80,6 @@ namespace AI.Controllers
             return View(recentUpdates);
         }
 
-        private void GetLatestAwards(RecentUpdatesVM recentUpdates)
-        {
-            recentUpdates.Awards = Services.AwardService.GetLatestAwards(5).Select(i => new AwardVM()
-            {
-                AwardID = i.AwardID,
-                Description = i.Description,
-                Title = i.Title,
-                UserID = i.UserID,
-                CreationDate = i.CreationDate,
-                FullName = i.User.FirstName + " " + i.User.LastName
-            }).ToList();
-        }
-
-        private void GetLatestNews(RecentUpdatesVM recentUpdates)
-        {
-            recentUpdates.News = Services.NewsService.GetLatestNews(5).Select(i => new NewsVM()
-            {
-                NewsID = i.NewsID,
-                Description = i.Description,
-                Link = i.Link,
-                Title = i.Title,
-                UserID = i.UserID,
-                CreationDate = i.CreationDate
-            }).ToList();
-        }
-
-        private void GetLatestPublications(RecentUpdatesVM recentUpdates)
-        {
-            recentUpdates.Publications = Services.PublicationService.GetLatestPublications(5).Select(i => new PublicationVM()
-            {
-                Authors = i.Authors,
-                ApplicationNumber = i.ApplicationNumber,
-                Book = i.Book,
-                Category = i.Category,
-                Conference = i.Conference,
-                PublicationDate = Convert.ToString(i.PublicationYear),
-                CreationDate = i.CreationDate,
-                Link = i.Link,
-                LinkText = i.LinkText,
-                Institution = i.Institution,
-                Issue = i.Issue,
-                Journal = i.Journal,
-                Pages = i.Pages,
-                PatentNumber = i.PatentNumber,
-                PatentOffice = i.PatentOffice,
-                Publisher = i.Publisher,
-                Source = i.Source,
-                Title = i.Title,
-                Volume = i.Volume
-
-            }).ToList();
-        }
-
-        private void GetLatestSoftware(RecentUpdatesVM recentUpdates)
-        {
-            recentUpdates.Software = Services.SoftwareDatasetService.GetLatestItems(5, false).Select(
-                i => new SoftwareDatasetVM()
-                {
-                    Authors = i.Authors,
-                    Description = i.Description,
-                    CounterDownloads = i.CounterDownloads,
-                    CounterLinkViews = i.CounterLinkViews,
-                    Link = i.Link,
-                    LinkText = i.LinkText,
-                    Title = i.Title,
-                    CreationDate = i.CreationDate
-                }).ToList();
-        }
-
-        private void GetLatestDatasets(RecentUpdatesVM recentUpdates)
-        {
-            recentUpdates.Datasets = Services.SoftwareDatasetService.GetLatestItems(5, true).Select(
-                i => new SoftwareDatasetVM()
-                {
-                    Authors = i.Authors,
-                    Description = i.Description,
-                    CounterDownloads = i.CounterDownloads,
-                    CounterLinkViews = i.CounterLinkViews,
-                    Link = i.Link,
-                    LinkText = i.LinkText,
-                    Title = i.Title,
-                    CreationDate = i.CreationDate
-                }).ToList();
-        }
-
         [HttpGet]
         public ActionResult Awards()
         {
@@ -402,6 +317,7 @@ namespace AI.Controllers
             {
                 items.Publications = Services.PublicationService.SearchPublications(searchText).Select(i => new PublicationVM()
                 {
+                    PublicationID = i.PublicationID,
                     UserID = i.UserID,
                     Title = i.Title,
                     Authors = i.Authors,
@@ -463,6 +379,91 @@ namespace AI.Controllers
 
              return View();
          }
+
+        private void GetLatestAwards(RecentUpdatesVM recentUpdates)
+        {
+            recentUpdates.Awards = Services.AwardService.GetLatestAwards(5).Select(i => new AwardVM()
+            {
+                AwardID = i.AwardID,
+                Description = i.Description,
+                Title = i.Title,
+                UserID = i.UserID,
+                CreationDate = i.CreationDate,
+                FullName = i.User.FirstName + " " + i.User.LastName
+            }).ToList();
+        }
+
+        private void GetLatestNews(RecentUpdatesVM recentUpdates)
+        {
+            recentUpdates.News = Services.NewsService.GetLatestNews(5).Select(i => new NewsVM()
+            {
+                NewsID = i.NewsID,
+                Description = i.Description,
+                Link = i.Link,
+                Title = i.Title,
+                UserID = i.UserID,
+                CreationDate = i.CreationDate
+            }).ToList();
+        }
+
+        private void GetLatestPublications(RecentUpdatesVM recentUpdates)
+        {
+            recentUpdates.Publications = Services.PublicationService.GetLatestPublications(5).Select(i => new PublicationVM()
+            {
+                Authors = i.Authors,
+                ApplicationNumber = i.ApplicationNumber,
+                Book = i.Book,
+                Category = i.Category,
+                Conference = i.Conference,
+                PublicationDate = Convert.ToString(i.PublicationYear),
+                CreationDate = i.CreationDate,
+                Link = i.Link,
+                LinkText = i.LinkText,
+                Institution = i.Institution,
+                Issue = i.Issue,
+                Journal = i.Journal,
+                Pages = i.Pages,
+                PatentNumber = i.PatentNumber,
+                PatentOffice = i.PatentOffice,
+                Publisher = i.Publisher,
+                Source = i.Source,
+                Title = i.Title,
+                Volume = i.Volume
+
+            }).ToList();
+        }
+
+        private void GetLatestSoftware(RecentUpdatesVM recentUpdates)
+        {
+            recentUpdates.Software = Services.SoftwareDatasetService.GetLatestItems(5, false).Select(
+                i => new SoftwareDatasetVM()
+                {
+                    Authors = i.Authors,
+                    Description = i.Description,
+                    CounterDownloads = i.CounterDownloads,
+                    CounterLinkViews = i.CounterLinkViews,
+                    Link = i.Link,
+                    LinkText = i.LinkText,
+                    Title = i.Title,
+                    CreationDate = i.CreationDate
+                }).ToList();
+        }
+
+        private void GetLatestDatasets(RecentUpdatesVM recentUpdates)
+        {
+            recentUpdates.Datasets = Services.SoftwareDatasetService.GetLatestItems(5, true).Select(
+                i => new SoftwareDatasetVM()
+                {
+                    Authors = i.Authors,
+                    Description = i.Description,
+                    CounterDownloads = i.CounterDownloads,
+                    CounterLinkViews = i.CounterLinkViews,
+                    Link = i.Link,
+                    LinkText = i.LinkText,
+                    Title = i.Title,
+                    CreationDate = i.CreationDate
+                }).ToList();
+        }
     }
 
 }
