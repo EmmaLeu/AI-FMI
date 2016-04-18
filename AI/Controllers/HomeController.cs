@@ -238,9 +238,11 @@ namespace AI.Controllers
         public ActionResult Software()
         {
             var software = Services.SoftwareDatasetService
-                .GetSoftwareDatasets(true).Select(
+                .GetSoftwareDatasets(false).Select(
                 i => new SoftwareDatasetVM()
                 {
+                    ID = i.ID,
+                    UserID = i.UserID,
                     Authors = i.Authors,
                     Description = i.Description,
                     CounterDownloads = i.CounterDownloads,
@@ -260,9 +262,11 @@ namespace AI.Controllers
         public ActionResult Datasets()
         {
             var dataset = Services.SoftwareDatasetService
-                .GetSoftwareDatasets(false).Select(
+                .GetSoftwareDatasets(true).Select(
                 i => new SoftwareDatasetVM()
                 {
+                    ID = i.ID,
+                    UserID = i.UserID,
                     Authors = i.Authors,
                     Description = i.Description,
                     CounterDownloads = i.CounterDownloads,
@@ -365,6 +369,7 @@ namespace AI.Controllers
                 items.Publications = Services.PublicationService.GetPublications()
                 .Select(i => new PublicationVM()
                 {
+                    PublicationID = i.PublicationID,
                     UserID = i.UserID,
                     Title = i.Title,
                     Authors = i.Authors,

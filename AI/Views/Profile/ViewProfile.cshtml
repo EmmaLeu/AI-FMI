@@ -9,7 +9,7 @@
         <img class="img-responsive img-thumbnail profile-picture" src=@Url.Action("GetProfilePicture", "Profile", new { id = Model.ImageID })>
     </div>
     <div class="list-group">
-        <div class="list-group-item">@Model.Title @Model.FirstName @Model.LastName 'profile</div>
+        <div class="list-group-item">@Model.Title @Model.FirstName @Model.LastName's profile</div>
         @if (Model.Rank != null)
         {
             <div class="list-group-item">@Model.Rank</div>
@@ -22,7 +22,7 @@
         {
             <div class="list-group-item">Interest Areas: @Model.InterestAreas</div>
         }
-        @if(Model.Nationality != null)
+        @if (Model.Nationality != null)
         {
             <div class="list-group-item">Nationality: @Model.Nationality</div>
         }
@@ -31,7 +31,7 @@
             <div class="list-group-item">Contact @Model.FirstName at: @Model.ContactEmail</div>
         }
     </div>
-    
+
 </div>
 @if (Model.EducationList.Count() > 0)
 {
@@ -44,101 +44,157 @@
     </div>
 }
 @if (Model.Publications.Count() > 0)
-{
-    <div>
-        <h3>Publications</h3>
-       @if (Model.Publications.Count > 0)
-       {
-           var currentYear = Model.Publications.First().PublicationDate;
+{<div id="publication-content-big">
+        <div id="publication-content">
+            <h3>Publications</h3>
+            @if (Model.Publications.Count > 0)
+            {
+                var currentYear = Model.Publications.First().PublicationDate;
 
-        <div><b>@currentYear</b></div>
-           foreach (var publication in Model.Publications)
-           {
-               if (currentYear != publication.PublicationDate)
-               {
-                   currentYear = publication.PublicationDate;
                 <div><b>@currentYear</b></div>
-               }
-
-            <div class="col-md-12 bs-callout bs-callout-primary">
-                <div>
-                    <p>
-                        <small class="category">Category: @publication.Category</small>
-                    </p>
-                    <div>
-                        <b>@publication.Authors. </b>
-                        <i>@(publication.Title != null ? publication.Title + ". " : string.Empty)</i>
-                        <i>@(publication.Book != null ? publication.Book + ". " : string.Empty)</i>
-                        <i>@(publication.Conference != null ? publication.Conference + ", " : string.Empty)</i>
-                        <i>@(publication.Journal != null ? publication.Journal + ", " : string.Empty)</i>
-                        @(publication.ApplicationNumber != null ? "Application Number " + publication.ApplicationNumber + ", " : string.Empty)
-                        @(publication.Volume != null ? "Volume " + publication.Volume + ", " : string.Empty)
-                        @(publication.Issue != null ? "Issue " + publication.Issue + ", " : string.Empty)
-                        @(publication.PatentNumber != null ? "Patent Numer " + publication.PatentNumber + ", " : string.Empty)
-                        @(publication.PatentOffice != null ? "Patent Office " + publication.PatentOffice + ", " : string.Empty)
-                        @(publication.Pages != null ? "Pages " + publication.Pages + ", " : string.Empty)
-                        @(publication.Publisher != null ? publication.Publisher + ", " : string.Empty)
-                        @(publication.Source != null ? "Source " + publication.Source + ", " : string.Empty)
-                        @(publication.PublicationDate != null ? publication.PublicationDate + ". " : string.Empty)
-
-                    </div>
-
-                </div>
-                <div>
-                    @if (publication.ImageName != null)
+                foreach (var publication in Model.Publications)
+                {
+                    if (currentYear != publication.PublicationDate)
                     {
-                        <div class="pull-right">
-                            <img style="max-height : 200px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = publication.ImageName })>
-                        </div>
+                        currentYear = publication.PublicationDate;
+                        <div><b>@currentYear</b></div>
                     }
-                </div>
-                @if (publication.Abstract != null)
-                {
-                    <br />
-                    <div>
-                        <p>Abstract</p>
-                        @publication.Abstract
+
+                    <div class="col-md-12 bs-callout bs-callout-primary publication-box">
+                        <div>
+                            @if (Session.CurrentUser != null && (Session.CurrentUser.IsAdmin || publication.UserID == Session.CurrentUser.UserID))
+                            {
+                                <small>
+                                    <i class="fa fa-trash fa-2x pull-right remove-publication" data-id=@publication.PublicationID></i>
+                                </small>
+                                <small>
+                                    <i class="fa fa-pencil-square fa-2x pull-right edit-publication" data-id="@publication.PublicationID"></i>
+                                </small>
+                                <div class="modal fade delete-publication-modal" data-backdrop="true" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="col-md-3"></div>
+                                        <div class="modal-content modal-confirm col-md-6">
+                                            <!-- dialog body -->
+                                            <div class="modal-body">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <div class="text-center">Do you want to permanently delete this item?</div>
+                                            </div>
+                                            <!-- dialog buttons -->
+                                            <div class="modal-footer">
+                                                <button type="button" data-dismiss="modal" class="btn ai-btn-warning">CANCEL</button>
+                                                <button type="submit" data-dismiss="modal" class="btn ai-btn-default delete-publication" data-id="@publication.PublicationID">OK</button>
+                                            </div>
+                                            <div class="col-md-3"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                            <p>
+                                <small class="category">Category: @publication.Category</small>
+                            </p>
+                            <div>
+                                <b>@publication.Authors. </b>
+                                <i>@(publication.Title != null ? publication.Title + ". " : string.Empty)</i>
+                                <i>@(publication.Book != null ? publication.Book + ". " : string.Empty)</i>
+                                <i>@(publication.Conference != null ? publication.Conference + ", " : string.Empty)</i>
+                                <i>@(publication.Journal != null ? publication.Journal + ", " : string.Empty)</i>
+                                @(publication.ApplicationNumber != null ? "Application Number " + publication.ApplicationNumber + ", " : string.Empty)
+                                @(publication.Volume != null ? "Volume " + publication.Volume + ", " : string.Empty)
+                                @(publication.Issue != null ? "Issue " + publication.Issue + ", " : string.Empty)
+                                @(publication.PatentNumber != null ? "Patent Numer " + publication.PatentNumber + ", " : string.Empty)
+                                @(publication.PatentOffice != null ? "Patent Office " + publication.PatentOffice + ", " : string.Empty)
+                                @(publication.Pages != null ? "Pages " + publication.Pages + ", " : string.Empty)
+                                @(publication.Publisher != null ? publication.Publisher + ", " : string.Empty)
+                                @(publication.Source != null ? "Source " + publication.Source + ", " : string.Empty)
+                                @(publication.PublicationDate != null ? publication.PublicationDate + ". " : string.Empty)
+
+                            </div>
+
+                        </div>
+
+                        @if (publication.ImageName != null)
+                        {
+                            <div class="pull-right">
+                                <img style="max-height : 200px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = publication.ImageName })>
+                            </div>
+                        }
+
+                        @if (publication.Abstract != null)
+                        {
+                            <br />
+                            <div>
+                                <p>Abstract</p>
+                                @publication.Abstract
+                            </div>
+                        }
+                        @if (publication.Link != null)
+                        {
+                            <p>More at <a href="@publication.Link" target="_blank">@(publication.LinkText != null ? publication.LinkText : publication.Link)</a></p>
+                        }
+
+                        @if (publication.KeyWordsList.Count > 0)
+                        {
+                            <p>
+                                <small>Tags:</small>
+                                @foreach (var key in publication.KeyWordsList)
+                                {
+                                    <span class="label ai-label">@key</span>
+                                }
+                            </p>
+                        }
+
+
+                        @if (publication.UploadName != null)
+                        {
+                            <span>
+                                <i class="fa fa-download"></i>
+                                <a href='@Path.Combine("/uploads", publication.UploadName)' target="_blank">Download</a>
+                            </span>
+                        }
+                        <small class="post-date pull-right">
+                            <i class="fa fa-clock-o"></i>
+                            <span class="from-now" data-time="@Convert.ToDateTime(publication.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                        </small>
                     </div>
                 }
-                @if (publication.Link != null)
-                {
-                    <p>More at <a href="@publication.Link" target="_blank">@(publication.LinkText != null ? publication.LinkText : publication.Link)</a></p>
-                }
-
-                @if (publication.KeyWordsList.Count > 0)
-                {
-                    <p>
-                        <small>Tags:</small>
-                        @foreach (var key in publication.KeyWordsList)
-                        {
-                            <span class="label ai-label">@key</span>
-                        }
-                    </p>
-                }
-
-
-                @if (publication.UploadName != null)
-                {
-                    <span>
-                        <i class="fa fa-download"></i>
-                        <a href='@Path.Combine("/uploads", publication.UploadName)' target="_blank">Download</a>
-                    </span>
-                }
-                <small class="post-date pull-right">
-                    <i class="fa fa-clock-o"></i>
-                    <span class="from-now" data-time="@Convert.ToDateTime(publication.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
-                </small>
-            </div>
-           }
-       }
+            }
+        </div>
     </div>
 }
 @if (Model.Software.Count() > 0)
-{
+{<div id="software-content-big">
+  <div id="software-content">
     <h3>Software</h3>
-    foreach (var item in Model.Software)
+    @foreach (var item in Model.Software)
     {
-        <div class="col-md-12 bs-callout bs-callout-primary">
+        <div class="col-md-12 bs-callout bs-callout-primary software-box">
+            @if (Session.CurrentUser != null && (Session.CurrentUser.IsAdmin || item.UserID == Session.CurrentUser.UserID))
+                    {
+                <small>
+                    <i class="fa fa-trash fa-2x pull-right remove-software" data-id=@item.ID></i>
+                </small>
+                    <small>
+                        <i class="fa fa-pencil-square fa-2x pull-right edit-software" data-id="@item.ID"></i>
+                    </small>
+                    <div class="modal fade delete-software-modal" data-backdrop="true" role="dialog">
+                        <div class="modal-dialog modal-sm">
+                            <div class="col-md-3"></div>
+                            <div class="modal-content modal-confirm col-md-6">
+                                <!-- dialog body -->
+                                <div class="modal-body">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <div class="text-center">Do you want to permanently delete this item?</div>
+                                </div>
+                                <!-- dialog buttons -->
+                                <div class="modal-footer">
+                                    <button type="button" data-dismiss="modal" class="btn ai-btn-warning">CANCEL</button>
+                                    <button type="submit" data-dismiss="modal" class="btn ai-btn-default delete-software" data-id="@item.ID">OK</button>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+                        </div>
+                    </div>
+            }
             <div><b>@(item.Title != null ? item.Title : string.Empty)</b></div>
             <div>Authors: @item.Authors </div>
             <div>
@@ -175,48 +231,88 @@
             </small>
         </div>
     }
+      </div>
+    </div>
 }
 
 @if (Model.Datasets.Count() > 0)
 {
-    <h3>Datasets</h3>
-    foreach (var item in Model.Datasets)
-    {
-        <div class="col-md-12 bs-callout bs-callout-primary">
-            <div><b>@(item.Title != null ? item.Title : string.Empty)</b></div>
-            <div>Authors: @item.Authors </div>
-            <div>
-                @if (item.ImageName != null)
+    <div id="datasets-content-big">
+        <div id="datasets-content">
+            <h3>Datasets</h3>
+            @foreach (var item in Model.Datasets)
+            {
+
+            <div class="col-md-12 bs-callout bs-callout-primary dataset-box">
+                @if (Session.CurrentUser != null && (Session.CurrentUser.IsAdmin || item.UserID == Session.CurrentUser.UserID))
                 {
-                    <div class="pull-right">
-                        <img style="max-height : 200px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = item.ImageName })>
-                    </div>
+                    <small>
+                        <i class="fa fa-trash fa-2x pull-right remove-dataset" data-id=@item.ID></i>
+                    </small>
+                    <small>
+                        <i class="fa fa-pencil-square fa-2x pull-right edit-dataset" data-id="@item.ID"></i>
+                    </small>
+                            <div class="modal fade delete-dataset-modal" data-backdrop="true" role="dialog">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="col-md-3"></div>
+                                    <div class="modal-content modal-confirm col-md-6">
+                                        <!-- dialog body -->
+                                        <div class="modal-body">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <div class="text-center">Do you want to permanently delete this item?</div>
+                                        </div>
+                                        <!-- dialog buttons -->
+                                        <div class="modal-footer">
+                                            <button type="button" data-dismiss="modal" class="btn ai-btn-warning">CANCEL</button>
+                                            <button type="submit" data-dismiss="modal" class="btn ai-btn-default delete-dataset" data-id="@item.ID">OK</button>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </div>
+                                </div>
+                            </div>
                 }
+                <div><b>@(item.Title != null ? item.Title : string.Empty)</b></div>
+                <div>Authors: @item.Authors </div>
+                <div>
+                    @if (item.ImageName != null)
+                {
+                        <div class="pull-right">
+                            <img style="max-height : 200px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = item.ImageName })>
+                        </div>
+                    }
+                </div>
+                @if (item.Description != null)
+                { <br />
+                <div>
+                    <p>Description</p>
+                    @item.Description
+                </div>
+                }
+                @if (item.Link != null)
+                {
+                    <p><a href="@item.Link" target="_blank">@(item.LinkText != null ? item.LinkText : item.Link)</a></p>
+                }
+
+
+                @if (item.UploadName != null)
+                {
+                    <span>
+                        <i class="fa fa-download"></i>
+                        <a href='@Path.Combine("/uploads", item.UploadName)' target="_blank">Download</a>
+                    </span>
+                }
+                <small class="post-date pull-right">
+                    <i class="fa fa-clock-o"></i>
+                    <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
+                </small>
             </div>
-            @if (item.Description != null)
-                    { <br />
-                    <div>
-                        <p>Description</p>
-                        @item.Description
-                    </div>
             }
-            @if (item.Link != null)
-                    {
-                <p><a href="@item.Link" target="_blank">@(item.LinkText != null ? item.LinkText : item.Link)</a></p>
-            }
-
-
-            @if (item.UploadName != null)
-                    {
-                <span>
-                    <i class="fa fa-download"></i>
-                    <a href='@Path.Combine("/uploads", item.UploadName)' target="_blank">Download</a>
-                </span>
-            }
-            <small class="post-date pull-right">
-                <i class="fa fa-clock-o"></i>
-                <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
-            </small>
+            </div>
         </div>
-    }
-}
+            }
+
+            <script>
+                var urlSearchPublications = "@Url.Action("Publications","Home")"
+                var urlDeletePublication = "@Url.Action("DeletePublication","Profile")"
+                var urlDeleteSoftware = "@Url.Action("DeleteSoftware","Profile")"
+            </script>

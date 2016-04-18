@@ -27,6 +27,7 @@ namespace AI
                     "~/Scripts/Home/news.js",
                     "~/Scripts/Home/awards.js",
                     "~/Scripts/Home/publications.js",
+                    "~/Scripts/Home/softwareDatasets.js",
                     "~/Scripts/moment.min.js"
                 ));
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(

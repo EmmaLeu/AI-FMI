@@ -160,12 +160,12 @@ img.img-small {
 
 }
 
-.remove-award, .remove-news {
+.remove-award, .remove-news, .remove-publication, .remove-dataset, .remove-software {
 
     color: #14213D;
 }
 
-.edit-award, .edit-news {
+.edit-award, .edit-news, .edit-publication, .edit-dataset, .edit-software {
     color: #FCA311;
 }
 

@@ -113,6 +113,7 @@ namespace AI.Controllers
                                 }).ToList(),
                 Publications = user.Publications.Select(i => new PublicationVM()
                                 {
+                                    PublicationID = i.PublicationID,
                                     UserID = i.UserID,
                                     Title = i.Title,
                                     Authors = i.Authors,
@@ -145,6 +146,7 @@ namespace AI.Controllers
                                 .Where(i => i.Type == false)
                                 .Select(i => new SoftwareDatasetVM()
                                 {
+                                    ID = i.ID,
                                     Authors = i.Authors,
                                     Description = i.Description,
                                     CounterDownloads = i.CounterDownloads,
@@ -155,11 +157,14 @@ namespace AI.Controllers
                                     CreationDate = i.CreationDate,
                                     ImageName = i.Images.Select(u => u.Name).FirstOrDefault(),
                                     UploadName = (i.Upload != null ? i.Upload.FileName : null)
-                                }).ToList(),
+                                })
+                                .OrderByDescending(i => i.ID)
+                                .ToList(),
                 Datasets = user.SoftwareDatasets
                                 .Where(i => i.Type == true)
                                 .Select(i => new SoftwareDatasetVM()
                                 {
+                                    ID = i.ID,
                                     Authors = i.Authors,
                                     Description = i.Description,
                                     CounterDownloads = i.CounterDownloads,
@@ -170,7 +175,9 @@ namespace AI.Controllers
                                     CreationDate = i.CreationDate,
                                     ImageName = i.Images.Select(u => u.Name).FirstOrDefault(),
                                     UploadName = (i.Upload != null ? i.Upload.FileName : null)
-                                }).ToList(),
+                                })
+                                .OrderByDescending(i => i.ID)
+                                .ToList(),
             };
                 return View(userInfo);
 
@@ -199,6 +206,64 @@ namespace AI.Controllers
 
             }
             return RedirectToAction("Login", "Account");
+        }
+
+        [HttpPost]
+        public JsonResult DeletePublication(int publicationId)
+        {
+            var publication = Services.PublicationService.DeletePublication(publicationId);
+            if(publication != null)
+            {
+                if(publication.Upload != null)
+                {
+                    var fullPath = Request.MapPath("~/uploads/" + publication.Upload.FileName);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
+
+                if(publication.Images != null && publication.Images.Count > 0)
+                {
+                    var fullPath = Request.MapPath("~/images/" + publication.Images.FirstOrDefault().Name);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
+                return Json("ok");
+            }
+
+            return Json("nok");
+        }
+
+        [HttpPost]
+        public JsonResult DeleteSoftware(int sdId)
+        {
+            var sd = Services.SoftwareDatasetService.DeleteSoftwareDataset(sdId);
+            if (sd != null)
+            {
+                if (sd.Upload != null)
+                {
+                    var fullPath = Request.MapPath("~/uploads/" + sd.Upload.FileName);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
+
+                if (sd.Images != null && sd.Images.Count > 0)
+                {
+                    var fullPath = Request.MapPath("~/images/" + sd.Images.FirstOrDefault().Name);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+                }
+                return Json("ok");
+            }
+
+            return Json("nok");
         }
 
         [HttpGet]
@@ -236,8 +301,7 @@ namespace AI.Controllers
             }
             return RedirectToAction("Login", "Account");
         }
-
-        
+     
 
         public ActionResult GetProfilePicture(int? id = null)
         {

@@ -32,5 +32,10 @@ namespace BL
         {
             return repository.PublicationRepo.SearchPublications(searchText);
         }
+
+        public Publication DeletePublication(int publicationId)
+        {
+            return repository.PublicationRepo.DeletePublication(publicationId);
+        }
     }
 }

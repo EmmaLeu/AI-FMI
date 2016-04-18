@@ -261,6 +261,7 @@
     <Content Include="Scripts\Home\news.js" />
     <None Include="Scripts\jquery-2.2.1-vsdoc.js" />
     <Content Include="Scripts\Home\publications.js" />
+    <Content Include="Scripts\Home\softwareDatasets.js" />
     <Content Include="Scripts\jquery-2.2.1.js" />
     <Content Include="Scripts\jquery-2.2.1.min.js" />
     <Content Include="Scripts\jquery-ui-1.11.4.js" />

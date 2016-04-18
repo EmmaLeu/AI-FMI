@@ -38,6 +38,31 @@
     $(".publication-header").on("click", "#remove-filters", function () {
         location.reload();
     });
+
+    $("#publication-content-big").on("click", ".remove-publication", function () {
+        $self = $(this);
+        $self.closest('.publication-box').find(".delete-publication-modal").modal('show');
+    });
+
+    $("#publication-content-big").on("click", ".delete-publication", function () {
+        $self = $(this);
+        $publicationId = $self.data("id");
+        $.ajax({
+            type: "POST",
+            url: urlDeletePublication,
+            data:
+            {
+                publicationId: $publicationId
+            }
+        }).done(function (resp) {
+            if (resp == 'ok') {
+                location.reload();
+            }
+            else {
+                $("#publication-content").prepend('<p class="alert-danger">Unsuccessful remove</p>');
+            }
+        })
+    });
 //    //implement scroll pagination
 //    $(window).scroll(function () {
 //        if ($(window).scrollTop() + $(window).height() == $(document).height()) {

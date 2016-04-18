@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using System;
 
 namespace DA.Repos
 {
@@ -68,6 +69,43 @@ namespace DA.Repos
                 .OrderByDescending(i => i.PublicationYear)
                 .ThenByDescending(i => i.CreationDate)
                 .ToList();
+        }
+
+        public Publication DeletePublication(int publicationId)
+        {
+            var deletedPublication = new Publication();
+
+            try
+            {
+                var publication = context.Publications
+                    .Include(i => i.Upload)
+                    .Include(i => i.Images)
+                    .Where(i => i.PublicationID == publicationId)
+                    .FirstOrDefault();
+
+                if (publication != null)
+                {
+                    if (publication.Upload != null)
+                    {
+                        context.Uploads.Remove(publication.Upload);
+                    }
+
+                    if (publication.Images != null)
+                    {
+                        context.Images.RemoveRange(publication.Images);
+                    }
+
+                    deletedPublication = context.Publications.Remove(publication);
+                }
+
+                context.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+
+            return deletedPublication;
         }
     }
 }
