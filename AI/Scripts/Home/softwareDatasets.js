@@ -46,4 +46,41 @@ $("#software-content-big").on("click", ".delete-software", function () {
             $("#software-content").prepend('<p class="alert-danger">Unsuccessful remove</p>');
         }
     })
+
+    $("#datasets-content").on("click", ".ai-link", function () {
+
+        $self = $(this);
+        var $id = $self.data("id");
+        $.ajax({
+            type: "POST",
+            url: urlUpdateLinkViews,
+            data:
+            {
+                id: $id
+            }
+        }).done(function (resp) {
+            if (resp == 'ok') {
+                
+            }
+        })
+        
+    });
+    $("#datasets-content").on("click", ".ai-download", function () {
+
+        $self = $(this);
+        var $id = $self.data("id");
+        $.ajax({
+            type: "POST",
+            url: urlUpdateDownloads,
+            data:
+            {
+                id: $id
+            }
+        }).done(function (resp) {
+            if (resp == 'ok') {
+                
+            }
+        })
+    });
+    
 });

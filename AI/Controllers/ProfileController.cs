@@ -17,17 +17,27 @@ namespace AI.Controllers
     {
         // GET: Profile/Edit/5
         [HttpGet]
-        public ActionResult Edit(int? id = null)
+        public ActionResult Edit(int id = 0)
         {
             if (Session.CurrentUser != null)
             {
                 var userID = Session.CurrentUser.UserID;
+                var user = new User();
+                if (id != 0)
+                {
+                    user = Services.UserService.GetUserWithEducation(id);
+                }
+                else
+                {
+                    user = Services.UserService.GetUserWithEducation(userID);
+                }
 
-                var user = Services.UserService.GetUserWithEducation(userID);
+
                 if (ModelState.IsValid)
                 {
                     var userInfo = new UserInfoVM()
                     {
+                        UserID = user.UserID,
                         FirstName = user.FirstName,
                         LastName = user.LastName,
                         Birthday = user.Birthday,
@@ -54,7 +64,6 @@ namespace AI.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        // POST: Profile/Edit/5
         [HttpPost]
         public ActionResult Edit(UserInfoVM user)
         {
@@ -62,7 +71,7 @@ namespace AI.Controllers
             {
                 var userToUpdate = new User()
                 {
-                    UserID = Session.CurrentUser.UserID,
+                    UserID = user.UserID,
                     FirstName = user.FirstName,
                     LastName = user.LastName,
                     Birthday = user.Birthday,
@@ -76,11 +85,14 @@ namespace AI.Controllers
                     userToUpdate.Title = user.Title.ToString();
                 if (user.Rank != null)
                     userToUpdate.Rank = user.Rank.ToString();
-
                 Services.UserService.UpdateUserInformation(userToUpdate);
-                Session.CurrentUser.FirstName = userToUpdate.FirstName;
-                Session.CurrentUser.LastName = userToUpdate.LastName;
-                Session.CurrentUser.Rank = EnumHelp.GetDescription(userToUpdate.Rank);
+                if (Session.CurrentUser.UserID == user.UserID)
+                {
+                    
+                    Session.CurrentUser.FirstName = userToUpdate.FirstName;
+                    Session.CurrentUser.LastName = userToUpdate.LastName;
+                    Session.CurrentUser.Rank = EnumHelp.GetDescription(userToUpdate.Rank);
+                }
                 return RedirectToAction("Edit");
             }
 

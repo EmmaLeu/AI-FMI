@@ -32,8 +32,7 @@ namespace AI.Controllers
                 })
                 .ToList(),
 
-                FormerMembers = Services.UserService.GetMembers()
-                .Where(i => i.IsDeleted == true)
+                FormerMembers = Services.UserService.GetFormerMembers()
                 .Select(i => new MemberVM()
                 {
                     UserID = i.UserID,
@@ -195,6 +194,28 @@ namespace AI.Controllers
                 }).ToList();
 
             return View(dataset);
+        }
+
+        [HttpPost]
+        public JsonResult UpdateLinkViews(int id = 0)
+        {
+            if(id != 0)
+            {
+                Services.SoftwareDatasetService.UpdateLinkViews(id);
+                return Json("ok");
+            }
+            return Json("nok");
+        }
+
+        [HttpPost]
+        public JsonResult UpdateDownloads(int id = 0)
+        {
+            if (id != 0)
+            {
+                Services.SoftwareDatasetService.UpdateDownloads(id);
+                return Json("ok");
+            }
+            return Json("nok");
         }
 
         [HttpGet]
@@ -362,6 +383,23 @@ namespace AI.Controllers
 
            // Response.AppendHeader("Content-Disposition", cd.ToString());
             return File(data, MimeMapping.GetMimeMapping(fileName));
+        }
+
+        public ActionResult UploadCoverImage(HttpPostedFileBase image)
+        {
+            if(image != null)
+            {
+                var fullPath = Request.MapPath("~/images/" + "cover.jpg");
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+
+                var path = Path.Combine(Server.MapPath("~/images"), "cover.jpg");
+                image.SaveAs(path);
+            }
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult GetImage(string fileName)

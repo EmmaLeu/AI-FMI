@@ -62,7 +62,7 @@ namespace AI.Controllers
                         };
                         Session.CurrentUser = sessionInfo;
                         FormsAuthentication.SetAuthCookie(user.LoginEmail, false);
-                        return RedirectToAction("Edit", "Profile");
+                        return RedirectToAction("Index", "Home");
                     }
                 }
                 ModelState.AddModelError(String.Empty, "The email or password provided are not correct");

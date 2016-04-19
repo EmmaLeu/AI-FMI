@@ -216,7 +216,10 @@
             }
             @if (item.Link != null)
                     {
-                <p><a href="@item.Link" target="_blank">@(item.LinkText != null ? item.LinkText : item.Link)</a></p>
+                <p>
+                    <a href="@item.Link" target="_blank" class="ai-link" data-id="@item.ID">@(item.LinkText != null ? item.LinkText : item.Link)</a>
+                    - @item.CounterLinkViews <i class="fa fa-eye"></i>
+                </p>
             }
 
 
@@ -224,8 +227,8 @@
                     {
                 <span>
                     <i class="fa fa-download"></i>
-                    <a href='@Path.Combine("/uploads", item.UploadName)' target="_blank">Download</a>
-                </span>
+                    <a href='@Path.Combine("/uploads", item.UploadName)' target="_blank" class="ai-download" data-id="@item.ID">Download</a>
+                    - @item.CounterDownloads <i class="fa fa-arrow-down"></i></span>
             }
             <div class="col-md-12">
                 <small class="post-date pull-right">
@@ -294,7 +297,9 @@
                 }
                 @if (item.Link != null)
                 {
-                    <p><a href="@item.Link" target="_blank">@(item.LinkText != null ? item.LinkText : item.Link)</a></p>
+                    <p>
+                        <a href="@item.Link" target="_blank" class="ai-link" data-id="@item.ID">@(item.LinkText != null ? item.LinkText : item.Link)</a>
+                        - @item.CounterLinkViews <i class="fa fa-eye"></i></p>
                 }
 
 
@@ -302,8 +307,8 @@
                 {
                     <span>
                         <i class="fa fa-download"></i>
-                        <a href='@Path.Combine("/uploads", item.UploadName)' target="_blank">Download</a>
-                    </span>
+                        <a href='@Path.Combine("/uploads", item.UploadName)' target="_blank" class="ai-download" data-id="@item.ID">Download</a>
+                        - @item.CounterDownloads <i class="fa fa-arrow-down"></i></span>
                 }
                 <div class="col-md-12">
                     <small class="post-date pull-right">
@@ -321,4 +326,6 @@
                 var urlSearchPublications = "@Url.Action("Publications","Home")"
                 var urlDeletePublication = "@Url.Action("DeletePublication","Profile")"
                 var urlDeleteSoftware = "@Url.Action("DeleteSoftware","Profile")"
+                var urlUpdateLinkViews = "@Url.Action("UpdateLinkViews","Home")"
+                var urlUpdateDownloads = "@Url.Action("UpdateDownloads", "Home")"
             </script>

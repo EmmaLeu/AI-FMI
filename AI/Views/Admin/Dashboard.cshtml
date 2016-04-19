@@ -1,0 +1,86 @@
+﻿@model AI.Models.DashboardVM
+
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<h2>Dashboard</h2>
+<div class="col-md-12">
+    <div class="col-md-6">
+        <p>
+            @Html.ActionLink("Register new member", "Register", "Admin")
+        </p>
+        <table class="table">
+            <tr>
+                <th>Memebers</th>
+            </tr>
+
+            @foreach (var item in Model.Members)
+            {
+                <tr>
+                    <td>
+                        @item.Title @item.FirstName @item.LastName
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Profile", new { id = item.UserID }, new { @class = "edit" }) |
+                        @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserID }) |
+                        @Html.ActionLink("Make former", "UpdateToFormerMember", new { id = item.UserID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div class="col-md-6">
+        <div class="col-md-6">
+            <p>
+                @Html.ActionLink("Add new collaborator", "AddCollaborator", "Admin")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>Collaborators</th>
+                </tr>
+
+                @foreach (var item in Model.Collaborators)
+            {
+                    <tr>
+                        <td>
+                            @item.Title @item.FirstName @item.LastName
+                        </td>
+                        <td>
+                            @Html.ActionLink("Delete", "DeleteCollaborator", new { id = item.CollaboratorID })
+                        </td>
+                    </tr>
+                }
+
+            </table>
+        </div>
+       
+    </div>
+    </div>
+<div class="col-md-12">
+   
+    <div class="col-md-6">
+        <p></p>
+        <table class="table">
+            <tr>
+                <th>Former members</th>
+            </tr>
+
+            @foreach (var item in Model.Formers)
+            {
+                <tr>
+                    <td>
+                        @item.Title @item.FirstName @item.LastName
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Profile", new { id = item.UserID }, new { @class = "edit" }) |
+                        @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserID })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+

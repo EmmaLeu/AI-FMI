@@ -185,6 +185,20 @@ namespace DA.Repos
 
             context.SaveChanges();
         }
+
+        public void UpdateLinkViews(int id)
+        {
+            var sd = context.Software.Where(i => i.ID == id).FirstOrDefault();
+            sd.CounterLinkViews++;
+            context.SaveChanges();
+        }
+
+        public void UpdateDownloads(int id)
+        {
+            var sd = context.Software.Where(i => i.ID == id).FirstOrDefault();
+            sd.CounterDownloads++;
+            context.SaveChanges();
+        }
     }
 }
 

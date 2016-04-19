@@ -46,5 +46,15 @@ namespace BL
         {
             repository.SoftwareDatasetRepo.UpdateSoftwareDataset(sd, deleteImage, deleteFile);
         }
+
+        public void UpdateLinkViews(int id)
+        {
+            repository.SoftwareDatasetRepo.UpdateLinkViews(id);
+        }
+
+        public void UpdateDownloads(int id)
+        {
+            repository.SoftwareDatasetRepo.UpdateDownloads(id);
+        }
     }
 }

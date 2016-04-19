@@ -11,7 +11,7 @@
         </li>
         @if (Session.CurrentUser.IsAdmin)
         {
-            <li>@Html.ActionLink("Register", "Register", "Admin", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+            <li>@Html.ActionLink("Dashboard", "Dashboard", "Admin", routeValues: null, htmlAttributes: new { id = "dashboard" })</li>
         }
         <li>@Html.ActionLink("Log Off","LogOff","Account")</li>
     </ul>

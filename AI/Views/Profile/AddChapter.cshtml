@@ -18,11 +18,11 @@
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
             <div class="form-group">
                 @Html.LabelFor(model => model.Upload, "Document:", htmlAttributes: new { @class = "control-label col-md-2" })
-                <input class="btn-primary" type="file" name="Upload" />
+                <input type="file" name="Upload" />
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Image, "Image:", htmlAttributes: new { @class = "control-label col-md-2" })
-                <input class="btn-primary" type="file" name="Image" accept="image/*" />
+                <input type="file" name="Image" accept="image/*" />
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })

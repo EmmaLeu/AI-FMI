@@ -99,18 +99,85 @@ namespace DA.Repos
 
         public List<User> GetMembers()
         {
-            return context.Users
+            var members = new List<User>();
+            members = context.Users
+                .Where(i => i.IsDeleted == false)
                 .Include(u => u.EducationList)
                 .OrderBy(u => u.LastName)
                 .ToList();
+
+            return members;
+        }
+
+        public List<User> GetFormerMembers()
+        {
+            var formers = new List<User>();
+
+            formers = context.Users
+                .Where(i => i.IsDeleted == true)
+                .OrderBy(i => i.LastName)
+                .ToList();
+
+            return formers;
+                
         }
 
         public List<Collaborator> GetCollaborators()
         {
-            return context.Collaborators
+            var collaborators = new List<Collaborator>();
+            collaborators = context.Collaborators
                 .OrderBy(u => u.LastName)
                 .ThenBy(u => u.FirstName)
                 .ToList();
+
+            return collaborators;
+        }
+
+        public void AddCollaborator(Collaborator collaborator)
+        {
+            context.Collaborators.Add(collaborator);
+            context.SaveChanges();
+        }
+
+        public void DeleteCollaborator(int collaboratorId)
+        {
+            var collaborator = context.Collaborators
+                .Where(i => i.CollaboratorID == collaboratorId)
+                .FirstOrDefault();
+            if (collaborator != null)
+            {
+                context.Collaborators.Remove(collaborator);
+            }
+            context.SaveChanges();
+        }
+
+        public void DeleteUser(int userId)
+        {
+            var user = context.Users
+                .Include(i => i.Publications)
+                .Include(i => i.EducationList)
+                .Include(i => i.ProfilePicture)
+                .Include(i => i.Awards)
+                .Include(i => i.NewsList)
+                .Include(i => i.SoftwareDatasets)
+                .Include(i => i.Roles)
+                .Where(i => i.UserID == userId)
+                .FirstOrDefault();
+            context.Users.Remove(user);
+            context.SaveChanges();
+        
+        }
+
+        public void UpdateToFormerMember(int userId)
+        {
+            var former = context.Users
+                .Where(i => i.UserID == userId)
+                .FirstOrDefault();
+            if (former != null)
+            {
+                former.IsDeleted = true;
+            }
+            context.SaveChanges();
         }
 
         public bool IsEmailUnique(string email)

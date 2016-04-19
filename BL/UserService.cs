@@ -52,6 +52,11 @@ namespace BL
             return repository.UserRepo.GetMembers();
         }
 
+        public List<User> GetFormerMembers()
+        {
+            return repository.UserRepo.GetFormerMembers();
+        }
+
         public List<Collaborator> GetCollaborators()
         {
             return repository.UserRepo.GetCollaborators();
@@ -66,9 +71,30 @@ namespace BL
             var user = GetUserById(userID);
             return user.FirstName + " " + user.LastName;
         }
+
         public List<Role> GetRoles()
         {
             return repository.UserRepo.GetRoles();
+        }
+
+        public void AddCollaborator(Collaborator collaborator)
+        {
+            repository.UserRepo.AddCollaborator(collaborator);
+        }
+
+        public void DeleteCollaborator(int id)
+        {
+            repository.UserRepo.DeleteCollaborator(id);
+        }
+
+        public void UpdateToFormerMember(int id)
+        {
+            repository.UserRepo.UpdateToFormerMember(id);
+        }
+
+        public void DeleteUser(int id)
+        {
+            repository.UserRepo.DeleteUser(id);
         }
     }
 }

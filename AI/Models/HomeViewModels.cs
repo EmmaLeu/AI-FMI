@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BE.Enums;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -16,21 +17,34 @@ namespace AI.Models
     public class MemberVM
     {
         public int UserID { get; set; }
+
         public string FirstName { get; set; }
+
         public string LastName { get; set; }
+
         public int? ImageID { get; set; }
+
         public string Title { get; set; }
+
         public bool IsDeleted { get; set; }
+
         public string Rank { get; set; }
     }
 
     public class CollaboratorVM
     {
         public int CollaboratorID { get; set; }
+
+        [Required]
         public string FirstName { get; set; }
+
+        [Required]
         public string LastName { get; set; }
+
         public int? ImageID { get; set; }
+
         public string Title { get; set; }
+
         public string Institution{ get; set; }
     }
 

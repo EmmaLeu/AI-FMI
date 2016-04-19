@@ -57,16 +57,22 @@
                     </div>
                             }
                             @if (item.Link != null)
-                    {
-                                <p><a href="@item.Link" target="_blank">@(item.LinkText != null ? item.LinkText : item.Link)</a></p>
+                            {
+                                <p>
+                                    <a href="@item.Link" class="ai-link" data-id="@item.ID" target="_blank">@(item.LinkText != null ? item.LinkText : item.Link)</a>
+                                    - @item.CounterLinkViews
+                                    <i class="fa fa-eye"></i>
+                                </p>
+
                             }
 
 
                             @if (item.UploadName != null)
-                    {
+                            {
                                 <span>
                                     <i class="fa fa-download"></i>
-                                    <a href='@Path.Combine("/uploads", item.UploadName)' target="_blank">Download</a>
+                                    <a href='@Path.Combine("/uploads", item.UploadName)' class="ai-download" data-id="@item.ID" target="_blank">Download</a>
+                                    - @item.CounterDownloads <i class="fa fa-arrow-down"></i>
                                 </span>
                             }
                             <div class="col-md-12">
@@ -82,4 +88,6 @@
         </div>
 <script>
     var urlDeleteSoftware = "@Url.Action("DeleteSoftware","Profile")"
+    var urlUpdateLinkViews = "@Url.Action("UpdateLinkViews","Home")"
+    var urlUpdateDownloads = "@Url.Action("UpdateDownloads", "Home")"
 </script>
