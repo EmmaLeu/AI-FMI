@@ -40,15 +40,30 @@ namespace DA.Repos
             context.SaveChanges();
         }
 
-        public List<Publication> GetPublications()
+        public List<Publication> GetPublications(int sort)
         {
-            return context.Publications
-                .OrderByDescending(i => i.PublicationID)
-                .Include(u => u.Upload)
-                .Include(u => u.Images)
-                .OrderByDescending(u => u.PublicationYear)
-                .ThenByDescending(u => u.PublicationID)
-                .ToList();
+            var publications = new List<Publication>();
+            if (sort == 1)
+            {
+                publications = context.Publications
+                    .OrderByDescending(i => i.PublicationID)
+                    .Include(u => u.Upload)
+                    .Include(u => u.Images)
+                    .OrderByDescending(u => u.PublicationYear)
+                    .ThenByDescending(u => u.PublicationID)
+                    .ToList();
+            }
+            else
+            {
+                publications = context.Publications
+                    .OrderByDescending(i => i.PublicationID)
+                    .Include(u => u.Upload)
+                    .Include(u => u.Images)
+                    .OrderBy(u => u.Category)
+                    .ThenByDescending(u => u.PublicationID)
+                    .ToList();
+            }
+            return publications;
         }
 
         public List<Publication> GetLatestPublications(int howMany)

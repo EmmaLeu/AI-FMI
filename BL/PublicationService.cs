@@ -18,9 +18,9 @@ namespace BL
             repository.PublicationRepo.AddPublication(publication);
         }
 
-        public List<Publication> GetPublications()
+        public List<Publication> GetPublications(int sort)
         {
-            return repository.PublicationRepo.GetPublications();
+            return repository.PublicationRepo.GetPublications(sort);
         }
 
         public List<Publication> GetLatestPublications(int howMany)

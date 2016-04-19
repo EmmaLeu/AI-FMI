@@ -104,7 +104,7 @@
                 @foreach (var item in Model.Datasets)
                 {
                     <li class="list-group-item"><i class="fa fa-paper-plane"></i> @item.Title, by @item.Authors
-                        <small class="post-date pull-right">
+                        <small"class="post-date pull-right">
                             <i class="fa fa-clock-o"></i>
                             <span class="from-now" data-time="@Convert.ToDateTime(item.CreationDate).ToString("yyyy-MM-dd HH':'mm':'ss")"></span>
                         </small>

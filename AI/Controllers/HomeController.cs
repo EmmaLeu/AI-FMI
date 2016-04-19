@@ -271,17 +271,18 @@ namespace AI.Controllers
             return Redirect(Request.UrlReferrer.AbsolutePath);
         }
 
-        public ActionResult Publications(string searchText, bool isSearch = false)
+        public ActionResult Publications(string searchText, bool isSearch = false, int sort = 1)
         {
             var items = new PublicationsVM()
             {
-                SearchText = searchText
+                SearchText = searchText,
+                SortOption = sort
             };
 
             if (!isSearch)
             {
 
-                items.Publications = Services.PublicationService.GetPublications()
+                items.Publications = Services.PublicationService.GetPublications(sort)
                 .Select(i => new PublicationVM()
                 {
                     PublicationID = i.PublicationID,

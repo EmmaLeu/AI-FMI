@@ -6,13 +6,31 @@
 <div id="publication-content-big">
     <div class="row publication-header">
         <h3 class="col-md-8">Publications
+            
             @if (!Model.SearchText.IsEmpty())
             {
                 <div class="btn btn-default">@Model.SearchText <i class="fa fa-times" id="remove-filters"></i></div>
             }
+            else
+            {
+                <div class="dropdown" style="display:inline">
+
+                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                        Sort option
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="@Url.Action("Publications", "Home", new { sort = 1 })">Year(default)</a></li>
+                        <li class="divider"></li>
+                        <li><a href="@Url.Action("Publications", "Home", new { sort = 2 })">Category</a></li>
+                    </ul>
+
+
+                </div>
+            }
         </h3>
         
-        <div class="col-md-4 ai-vertical-align">
+         <div class="col-md-4 ai-vertical-align">
             <input placeholder="Search publications..." id="in-search-publications" class="col-md-9 ai-search-box" />
             <div class="col-md-3 ai-search-icon" id="btn-search-publications"><i style="color: white;" class="fa fa-search ai-vertical-align"></i></div>
         </div>
@@ -22,14 +40,34 @@
         @if (Model.Publications.Count > 0)
         {
             var currentYear = Model.Publications.First().PublicationDate;
+            var currentCategory = Model.Publications.First().Category;
 
-         <div><b>@currentYear</b></div>
+            if (Model.SortOption == 1)
+            {
+                <div><b>@currentYear</b></div> 
+            }
+            else
+            {
+                <div><b>@currentCategory</b></div>
+            }
             foreach (var publication in Model.Publications)
             {
-                if (currentYear != publication.PublicationDate)
+                if (Model.SortOption == 1)
                 {
-                    currentYear = publication.PublicationDate;
-                    <div><b>@currentYear</b></div>
+                    if (currentYear != publication.PublicationDate)
+                    {
+                        currentYear = publication.PublicationDate;
+                        <div><b>@currentYear</b></div>
+                    }
+                }
+                else if(Model.SortOption == 2)
+                {
+                    if(currentCategory != publication.Category)
+                    {
+                        currentCategory = publication.Category;
+                        <div><b>@currentCategory</b></div>
+
+                    }
                 }
 
             <div class="col-md-12 bs-callout bs-callout-primary publication-box">

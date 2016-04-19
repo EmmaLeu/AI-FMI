@@ -165,6 +165,7 @@ namespace AI.Models
 
         public string SearchText { get; set; }
 
+        public int SortOption { get; set; }
     }
 
 }
