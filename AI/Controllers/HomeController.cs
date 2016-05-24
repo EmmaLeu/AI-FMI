@@ -8,6 +8,8 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace AI.Controllers
 {
@@ -398,6 +400,16 @@ namespace AI.Controllers
                 var path = Path.Combine(Server.MapPath("~/images"), "cover.jpg");
                 image.SaveAs(path);
             }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult AddCaptionToCoverImage(string caption)
+        {
+            XDocument xdoc = XDocument.Load("~/XMLCover.xml");
+            var element = xdoc.Elements("caption").Single();
+            element.Value = caption;
+            xdoc.Save("~/XMLCover.xml");
 
             return RedirectToAction("Index");
         }

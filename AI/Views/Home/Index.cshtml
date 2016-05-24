@@ -6,21 +6,26 @@
 <div>
     <div>
         <img class="col-md-12" style="max-height: 300px" src=@Url.Action("GetImage", "Home", new { fileName = "cover.jpg" })>
+        @using (Html.BeginForm("AddCaptionToCoverImage", "Home", FormMethod.Post, new { id = "editCaptionForm" }))
+        {
+            <div>Caption <input type="text" name="caption" id="caption"/></div>
+            <button class="btn btn btn-xs btn-link" type="submit" id="coverPhotoCaptionBtn">Edit</button>
+        }
         @if (Session.CurrentUser != null && Session.CurrentUser.IsAdmin)
+        {
+            using (Html.BeginForm("UploadCoverImage", "Home", FormMethod.Post,
+                    new
+                    {
+                        id = "coverPhotoForm"
+                     ,
+                        enctype = "multipart/form-data"
+                    })
+                  )
             {
-                using (Html.BeginForm("UploadCoverImage", "Home", FormMethod.Post,
-                        new
-                        {
-                            id = "coverPhotoForm"
-                         ,
-                            enctype = "multipart/form-data"
-                        })
-                      )
-                {
                 <input type="file" class="hidden" name="image" id="coverPhotoHidden" accept="image/*" />
                 <button class="btn btn-xs btn-link col-md-12" id="coverPhotoBtn">Change photo</button>
                 }
-        }
+            }
     </div>
     <div class="col-md-12">
  

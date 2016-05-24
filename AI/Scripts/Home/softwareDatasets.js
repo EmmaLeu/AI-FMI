@@ -66,7 +66,7 @@ $("#software-content-big").on("click", ".delete-software", function () {
         
     });
     $("#datasets-content").on("click", ".ai-download", function () {
-
+        alert("asa");
         $self = $(this);
         var $id = $self.data("id");
         $.ajax({
