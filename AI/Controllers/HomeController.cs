@@ -77,7 +77,14 @@ namespace AI.Controllers
             GetLatestAwards(recentUpdates);
             GetLatestSoftware(recentUpdates);
             GetLatestDatasets(recentUpdates);
-
+            var path = Path.Combine(Server.MapPath("~/XMLCover.xml"));
+            if (System.IO.File.Exists(path))
+            {
+                XDocument xdoc = XDocument.Load(path);
+                var element = xdoc.Elements("caption").Single().Value;
+                recentUpdates.CoverCaption = element;
+            }
+            
             return View(recentUpdates);
         }
 
@@ -399,19 +406,26 @@ namespace AI.Controllers
 
                 var path = Path.Combine(Server.MapPath("~/images"), "cover.jpg");
                 image.SaveAs(path);
+                AddCaptionToCoverImage("");
             }
 
             return RedirectToAction("Index");
         }
 
-        public ActionResult AddCaptionToCoverImage(string caption)
+        [HttpPost]
+        public ActionResult AddCaptionToCoverImage(string caption="")
         {
-            XDocument xdoc = XDocument.Load("~/XMLCover.xml");
-            var element = xdoc.Elements("caption").Single();
-            element.Value = caption;
-            xdoc.Save("~/XMLCover.xml");
+            var path = Path.Combine(Server.MapPath("~/XMLCover.xml"));
+            if (System.IO.File.Exists(path))
+            {
+                XDocument xdoc = XDocument.Load(path);
+                var element = xdoc.Elements("caption").Single();
+                element.Value = caption;
+                xdoc.Save(Path.Combine(Server.MapPath("~/XMLCover.xml")));
+                return Json("ok");
+            }
 
-            return RedirectToAction("Index");
+            return Json("nok"); 
         }
 
         public ActionResult GetImage(string fileName)

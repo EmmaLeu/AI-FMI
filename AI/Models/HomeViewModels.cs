@@ -70,10 +70,16 @@ namespace AI.Models
     public class RecentUpdatesVM
     {
         public List<AwardVM> Awards { get; set; }
+
         public List<NewsVM> News { get; set; }
+
         public List<SoftwareDatasetVM> Software { get; set; }
+
         public List<SoftwareDatasetVM> Datasets { get; set; }
+
         public List<PublicationVM> Publications { get; set; }
+
+        public string CoverCaption { get; set; }
     }
 
     public class NewsVM

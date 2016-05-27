@@ -14,4 +14,32 @@
 
         $("#coverPhotoForm").submit();
     })
+
+    $("#coverPhotoCaptionBtn").on("click", function (e) {
+        e.preventDefault();
+        $("#editCaptionModal").modal('show');
+    });
+
+    $("body").on("click", "#edit-caption", function () {
+        $self = $(this);
+        $("#editCaptionModal").modal('show');
+        var json = {
+            caption: $("#editedCaption").val()
+        };
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: urlUpdateCaption,
+            data: JSON.stringify(json)
+        }).done(function (resp) {
+            if (resp == 'ok') {
+                $(".modal-body>.alert-success").remove();
+                $(".modal-body.modal-edit").append('<p class="alert-success left">Update successfully done.</p>');
+                $("#cover-caption").text($("#editedCaption").val());
+                $(".modal-body>.alert-success").remove();
+            }
+            else {
+            }
+        });
+    });
 });
