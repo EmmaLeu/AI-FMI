@@ -210,6 +210,11 @@ namespace AI.Controllers
         {
             if(id != 0)
             {
+                var userId = Services.SoftwareDatasetService.GetSoftwareDatasetById(id).UserID;
+                if(Session.CurrentUser !=null && Session.CurrentUser.UserID == userId)
+                {
+                    return Json("ok");
+                }
                 Services.SoftwareDatasetService.UpdateLinkViews(id);
                 return Json("ok");
             }
@@ -221,6 +226,11 @@ namespace AI.Controllers
         {
             if (id != 0)
             {
+                var userId = Services.SoftwareDatasetService.GetSoftwareDatasetById(id).UserID;
+                if (Session.CurrentUser != null && Session.CurrentUser.UserID == userId)
+                {
+                    return Json("ok");
+                }
                 Services.SoftwareDatasetService.UpdateDownloads(id);
                 return Json("ok");
             }

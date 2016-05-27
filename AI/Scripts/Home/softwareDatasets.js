@@ -45,42 +45,43 @@ $("#software-content-big").on("click", ".delete-software", function () {
         else {
             $("#software-content").prepend('<p class="alert-danger">Unsuccessful remove</p>');
         }
+    })    
+});
+
+$("body").on("click", ".ai-link", function () {
+
+    console.log("click");
+    $self = $(this);
+    var $id = $self.data("id");
+    $.ajax({
+        type: "POST",
+        url: urlUpdateLinkViews,
+        data:
+        {
+            id: $id
+        }
+    }).done(function (resp) {
+        if (resp == 'ok') {
+
+        }
     })
 
-    $("#datasets-content").on("click", ".ai-link", function () {
+});
 
-        $self = $(this);
-        var $id = $self.data("id");
-        $.ajax({
-            type: "POST",
-            url: urlUpdateLinkViews,
-            data:
-            {
-                id: $id
-            }
-        }).done(function (resp) {
-            if (resp == 'ok') {
-                
-            }
-        })
-        
-    });
-    $("#datasets-content").on("click", ".ai-download", function () {
-        alert("asa");
-        $self = $(this);
-        var $id = $self.data("id");
-        $.ajax({
-            type: "POST",
-            url: urlUpdateDownloads,
-            data:
-            {
-                id: $id
-            }
-        }).done(function (resp) {
-            if (resp == 'ok') {
-                
-            }
-        })
-    });
-    
+$("body").on("click", ".ai-download", function () {
+    alert("asa");
+    $self = $(this);
+    var $id = $self.data("id");
+    $.ajax({
+        type: "POST",
+        url: urlUpdateDownloads,
+        data:
+        {
+            id: $id
+        }
+    }).done(function (resp) {
+        if (resp == 'ok') {
+
+        }
+    })
 });
