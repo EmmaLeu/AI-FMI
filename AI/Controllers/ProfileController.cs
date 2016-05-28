@@ -471,6 +471,11 @@ namespace AI.Controllers
                 var userID = Session.CurrentUser.UserID;
                 if (ModelState.IsValid)
                 {
+                    if(sd.Upload == null && sd.Link == null)
+                    {
+                        ModelState.AddModelError("", "You must include at least a file or document.");
+                        return View("Add" + (sd.Type == false ? "Software" : "Dataset"), sd);
+                    }
                     var newPub = GetSoftwareInformation(sd, userID);
                     Services.SoftwareDatasetService.AddSoftwareDataset(newPub);
                     return Redirect(Request.UrlReferrer.AbsolutePath);

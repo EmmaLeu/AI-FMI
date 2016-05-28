@@ -36,6 +36,10 @@ namespace AI
                     "~/Scripts/Admin/dashboard.js"
                 ));
 
+            bundles.Add(new ScriptBundle("~/bundles/profile").Include(
+                    "~/Scripts/Profile/viewProfile.js"
+                ));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
             "~/Scripts/jquery-ui-{version}.js"));
 
