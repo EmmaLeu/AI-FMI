@@ -104,11 +104,11 @@ namespace AI.Controllers
         }
 
         [HttpPost]
-        public ActionResult UpdateToFormerMember(int id)
+        public JsonResult UpdateToFormerOrMember(int id, bool isDeleted)
         {
                 if (Session.CurrentUser != null && Session.CurrentUser.IsAdmin)
                 {
-                    Services.UserService.UpdateToFormerMember(id);
+                    Services.UserService.UpdateToFormerMember(id, isDeleted);
                     return Json("ok");
                 }
 
@@ -141,14 +141,15 @@ namespace AI.Controllers
             return RedirectToAction("Dashboard");
         }
 
-        public ActionResult DeleteCollaborator(int id)
+        [HttpPost]
+        public JsonResult DeleteCollaborator(int id)
         {
             if (Session.CurrentUser != null)
             {
                 Services.UserService.DeleteCollaborator(id);
-                return RedirectToAction("Dashboard");
+                return Json("ok");
             }
-            return RedirectToAction("Login", "Account");
+            return Json("nok");
         }
 
         public JsonResult IsEmailUnique(string LoginEmail)
@@ -156,7 +157,8 @@ namespace AI.Controllers
             return Json(Services.UserService.IsEmailUnique(LoginEmail), JsonRequestBehavior.AllowGet);
         }
 
-        public ActionResult DeleteUser(int id = 0)
+        [HttpPost]
+        public JsonResult DeleteUser(int id = 0)
         {
             if(Session.CurrentUser != null & Session.CurrentUser.IsAdmin)
             {
@@ -164,10 +166,10 @@ namespace AI.Controllers
                 {
                     Services.UserService.DeleteUser(id);
                 }
-                return RedirectToAction("Dashboard");
+                return Json("ok");
             }
 
-            return RedirectToAction("Login", "Account");
+            return Json("nok");
         }
 
         private List<SelectListItem> GetRoles()

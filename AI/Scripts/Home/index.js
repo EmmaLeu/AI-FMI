@@ -36,7 +36,6 @@
                 $(".modal-body>.alert-success").remove();
                 $(".modal-body.modal-edit").append('<p class="alert-success left">Update successfully done.</p>');
                 $("#cover-caption").text($("#editedCaption").val());
-                $(".modal-body>.alert-success").remove();
             }
             else {
             }

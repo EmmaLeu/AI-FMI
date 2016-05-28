@@ -87,9 +87,9 @@ namespace BL
             repository.UserRepo.DeleteCollaborator(id);
         }
 
-        public void UpdateToFormerMember(int id)
+        public void UpdateToFormerMember(int id, bool isDeleted)
         {
-            repository.UserRepo.UpdateToFormerMember(id);
+            repository.UserRepo.UpdateToFormerOrMember(id, isDeleted);
         }
 
         public void DeleteUser(int id)

@@ -10,7 +10,7 @@
         <p>
             @Html.ActionLink("Register new member", "Register", "Admin")
         </p>
-        <table class="table">
+        <table class="table" id="user-table">
             <tr>
                 <th>Memebers</th>
             </tr>
@@ -21,10 +21,54 @@
                     <td>
                         @item.Title @item.FirstName @item.LastName
                     </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", "Profile", new { id = item.UserID }, new { @class = "edit" }) |
-                        @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserID }) |
-                        @Html.ActionLink("Make former", "UpdateToFormerMember", new { id = item.UserID })
+                    <td class="options-member-td">
+                        @Html.ActionLink("Edit", "Edit", "Profile", new { id = item.UserID }, new { @class = "edit btn btn-sm btn-link" })
+                        <button class="btn btn-sm btn-link remove-member" data-id=@item.UserID>Delete</button>
+                        <!-- delete modal-->
+                        <div class="modal fade delete-member-modal" data-backdrop="true" role="dialog">
+                            <div class="modal-dialog modal-md">
+                                <div class="col-md-3"></div>
+                                <div class="modal-content modal-confirm col-md-6">
+                                    <!-- dialog body -->
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <div class="text-center">
+                                            <p>Do you want to permanently delete this item? </p>
+                                            <p>By agreeing, you will delete all the papers associated with this user.</p>
+                                        </div>
+                                    </div>
+                                    <!-- dialog buttons -->
+                                    <div class="modal-footer">
+                                        <button type="button" data-dismiss="modal" class="btn ai-btn-warning">CANCEL</button>
+                                        <button type="submit" data-dismiss="modal" class="btn ai-btn-default delete-member">OK</button>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-link update-member" data-id=@item.UserID>Make former</button>
+                        <!-- update to former modal-->
+                        <div class="modal fade update-member-modal" data-backdrop="true" role="dialog">
+                            <div class="modal-dialog modal-sm">
+                                <div class="col-md-3"></div>
+                                <div class="modal-content modal-confirm col-md-6">
+                                    <!-- dialog body -->
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <div class="text-center">
+                                            <p>Do you want to make this member a former one?</p>
+                                            <p>By agreeing, this user will no longer be able to login.</p>
+                                        </div>
+                                    </div>
+                                    <!-- dialog buttons -->
+                                    <div class="modal-footer">
+                                        <button type="button" data-dismiss="modal" class="btn ai-btn-warning">CANCEL</button>
+                                        <button type="submit" data-dismiss="modal" class="btn ai-btn-default update-member-confirm">OK</button>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             }
@@ -36,7 +80,7 @@
             <p>
                 @Html.ActionLink("Add new collaborator", "AddCollaborator", "Admin")
             </p>
-            <table class="table">
+            <table class="table" id="collaborator-table">
                 <tr>
                     <th>Collaborators</th>
                 </tr>
@@ -47,8 +91,29 @@
                         <td>
                             @item.Title @item.FirstName @item.LastName
                         </td>
-                        <td>
-                            @Html.ActionLink("Delete", "DeleteCollaborator", new { id = item.CollaboratorID })
+                        <td class="options-collaborator-td">
+                            <button class="btn btn-sm btn-link remove-collaborator" data-id=@item.CollaboratorID>Delete</button>
+                            <!-- delete modal-->
+                            <div class="modal fade delete-collaborator-modal" data-backdrop="true" role="dialog">
+                                <div class="modal-dialog modal-md">
+                                    <div class="col-md-3"></div>
+                                    <div class="modal-content modal-confirm col-md-6">
+                                        <!-- dialog body -->
+                                        <div class="modal-body">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <div class="text-center">
+                                                <p>Do you want to permanently delete this item? </p>
+                                            </div>
+                                        </div>
+                                        <!-- dialog buttons -->
+                                        <div class="modal-footer">
+                                            <button type="button" data-dismiss="modal" class="btn ai-btn-warning">CANCEL</button>
+                                            <button type="submit" data-dismiss="modal" class="btn ai-btn-default delete-collaborator-confirm">OK</button>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 }
@@ -62,7 +127,7 @@
    
     <div class="col-md-6">
         <p></p>
-        <table class="table">
+        <table class="table" id="former-table">
             <tr>
                 <th>Former members</th>
             </tr>
@@ -73,9 +138,54 @@
                     <td>
                         @item.Title @item.FirstName @item.LastName
                     </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", "Profile", new { id = item.UserID }, new { @class = "edit" }) |
-                        @Html.ActionLink("Delete", "DeleteUser", new { id = item.UserID })
+                    <td class="options-former-td">
+                        @Html.ActionLink("Edit", "Edit", "Profile", new { id = item.UserID }, new { @class = "edit btn btn-sm btn-link" })
+                        <button class="btn btn-sm btn-link remove-former" data-id=@item.UserID>Delete</button>
+                        <!-- delete modal-->
+                        <div class="modal fade delete-former-modal" data-backdrop="true" role="dialog">
+                            <div class="modal-dialog modal-md">
+                                <div class="col-md-3"></div>
+                                <div class="modal-content modal-confirm col-md-6">
+                                    <!-- dialog body -->
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <div class="text-center">
+                                            <p>Do you want to permanently delete this item? </p>
+                                            <p>By agreeing, you will delete all the papers associated with this user.</p>
+                                        </div>
+                                    </div>
+                                    <!-- dialog buttons -->
+                                    <div class="modal-footer">
+                                        <button type="button" data-dismiss="modal" class="btn ai-btn-warning">CANCEL</button>
+                                        <button type="submit" data-dismiss="modal" class="btn ai-btn-default delete-former-confirm">OK</button>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn btn-sm btn-link update-former" data-id=@item.UserID>Make member</button>
+                        <!-- update to former modal-->
+                        <div class="modal fade update-former-modal" data-backdrop="true" role="dialog">
+                            <div class="modal-dialog modal-sm">
+                                <div class="col-md-3"></div>
+                                <div class="modal-content modal-confirm col-md-6">
+                                    <!-- dialog body -->
+                                    <div class="modal-body">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <div class="text-center">
+                                            <p>Do you want to make this person a member?</p>
+                                            <p>By agreeing, this user will be able to login.</p>
+                                        </div>
+                                    </div>
+                                    <!-- dialog buttons -->
+                                    <div class="modal-footer">
+                                        <button type="button" data-dismiss="modal" class="btn ai-btn-warning">CANCEL</button>
+                                        <button type="submit" data-dismiss="modal" class="btn ai-btn-default update-former-confirm">OK</button>
+                                    </div>
+                                    <div class="col-md-3"></div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                 </tr>
             }
@@ -83,4 +193,8 @@
         </table>
     </div>
 </div>
-
+<script>
+    var urlDeleteMember = "@Url.Action("DeleteUser", "Admin")";
+    var urlUpdateToFormerOrMember = "@Url.Action("UpdateToFormerOrMember", "Admin")";
+    var urlDeleteCollaborator = "@Url.Action("DeleteCollaborator", "Admin")";
+</script>

@@ -168,14 +168,14 @@ namespace DA.Repos
         
         }
 
-        public void UpdateToFormerMember(int userId)
+        public void UpdateToFormerOrMember(int userId, bool isDeleted)
         {
             var former = context.Users
                 .Where(i => i.UserID == userId)
                 .FirstOrDefault();
             if (former != null)
             {
-                former.IsDeleted = true;
+                former.IsDeleted = isDeleted;
             }
             context.SaveChanges();
         }

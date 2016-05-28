@@ -31,6 +31,11 @@ namespace AI
                     "~/Scripts/Home/index.js",
                     "~/Scripts/moment.min.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/bundles/admin").Include(
+                    "~/Scripts/Admin/dashboard.js"
+                ));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryui").Include(
             "~/Scripts/jquery-ui-{version}.js"));
 
