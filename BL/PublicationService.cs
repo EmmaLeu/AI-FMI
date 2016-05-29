@@ -18,9 +18,18 @@ namespace BL
             repository.PublicationRepo.AddPublication(publication);
         }
 
-        public List<Publication> GetPublications(int sort)
+        public List<Publication> GetPublications(string sort)
         {
             return repository.PublicationRepo.GetPublications(sort);
+        }
+        
+        public List<Publication> GetPublicationsPaged(string sort, int page, int itemsPerPage)
+        {
+            return repository.PublicationRepo.GetPublicationsPaged(sort, page, itemsPerPage);
+        }
+        public int GetPublicationCount(string category)
+        {
+            return repository.PublicationRepo.GetPublicationCount(category);
         }
 
         public List<Publication> GetLatestPublications(int howMany)
@@ -46,6 +55,11 @@ namespace BL
         public void UpdatePublication(Publication publication, bool deleteImage, bool deleteUpload)
         {
             repository.PublicationRepo.UpdatePublication(publication, deleteImage, deleteUpload);
+        }
+
+        public List<string> GetCategories()
+        {
+            return repository.PublicationRepo.GetCategories();
         }
     }
 }

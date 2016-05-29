@@ -31,13 +31,27 @@
             }).done(function (resp) {
 
                 $(".body-content").replaceWith(resp);
+                $("#pagination-nav").remove();
             });
         }
     });
 
-    $(".publication-header").on("click", "#remove-filters", function () {
-        location.reload();
-    });
+    $("#publication-content-big").on("change", "#dropdown-category", function () {
+        $sort = $("#dropdown-category").val();
+        $.ajax({
+            type: "GET",
+            url: urlSearchPublications,
+            data:
+            {
+                searchText: "",
+                isSearch: false,
+                sort: $sort,
+                page: 1
+            }
+        }).done(function (resp) {
+
+            $(".body-content").replaceWith(resp);
+        });
 
     $("#publication-content-big").on("click", ".remove-publication", function () {
         $self = $(this);
@@ -63,42 +77,8 @@
             }
         })
     });
-//    //implement scroll pagination
-//    $(window).scroll(function () {
-//        if ($(window).scrollTop() + $(window).height() == $(document).height()) {
-//            if (!isLoading) {
-//                getOlderPublications();
-//            }
-//        }
-//    });
-
-//    function getOlderPublications() {
-//        $('#divPublicationsLoader').html("Loading posts...")
-//        isLoading = true;
-//        $.ajax(
-//            {
-//                type: "GET",
-//                url: urlGetOlderPublications,
-//                data:
-//                    {
-//                        lastID: $("#publication-list .publication-container:last").data("id")
-//                    },
-//                contentType: "application/json",
-//                dataType: "json"
-
-//            }).done(function (publications) {
-
-//                if (publications != "") {
-//                    for (var p = 0; p < publications.length; p++) {
-//                        var html = template(getPublicationContext(p, posts));
-//                        $('#post-list').append(html);
-//                        $(".comment-panel").hide();
-//                        setTime();
-//                    }
-//                }
-//                $('#divPostsLoader').empty();
-//                isLoading = false;
-//            });
-//    }
-
+    });
+    $("body").on("click", "#remove-filters", function () {
+        location.reload();
+    });
 });

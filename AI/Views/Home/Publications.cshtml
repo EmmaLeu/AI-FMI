@@ -13,20 +13,11 @@
             }
             else
             {
-                <div class="dropdown" style="display:inline">
-
-                    <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                        Sort option
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu">
-                        <li><a href="@Url.Action("Publications", "Home", new { sort = 1 })">Year(default)</a></li>
-                        <li class="divider"></li>
-                        <li><a href="@Url.Action("Publications", "Home", new { sort = 2 })">Category</a></li>
-                    </ul>
-
-
+                <div style="display: inline">
+                    @Html.DropDownListFor(model => model.Category, new SelectList(Model.Categories, "Id", "Name"), new { id = "dropdown-category", @class = "dropdown-menu", @style = "display:inline" })
+                    @Html.HiddenFor(model => model.Category)                
                 </div>
+
             }
         </h3>
         
@@ -42,33 +33,8 @@
             var currentYear = Model.Publications.First().PublicationDate;
             var currentCategory = Model.Publications.First().Category;
 
-            if (Model.SortOption == 1)
-            {
-                <div><b>@currentYear</b></div> 
-            }
-            else
-            {
-                <div><b>@currentCategory</b></div>
-            }
             foreach (var publication in Model.Publications)
             {
-                if (Model.SortOption == 1)
-                {
-                    if (currentYear != publication.PublicationDate)
-                    {
-                        currentYear = publication.PublicationDate;
-                        <div><b>@currentYear</b></div>
-                    }
-                }
-                else if(Model.SortOption == 2)
-                {
-                    if(currentCategory != publication.Category)
-                    {
-                        currentCategory = publication.Category;
-                        <div><b>@currentCategory</b></div>
-
-                    }
-                }
 
             <div class="col-md-12 bs-callout bs-callout-primary publication-box">
                 <div>
@@ -172,6 +138,13 @@
         }
         }
     </div>
+    <nav id="pagination-nav">
+        @Html.HiddenFor(model => model.CurrentPage)
+        <ul class="pager">
+            <li class=@(Model.CurrentPage <= 1 ? "disabled" : "")><a href=@(Model.CurrentPage <= 1? "#": @Url.Action("Publications", "Home", new { page = Model.CurrentPage - 1 }))>Previous</a></li>
+            <li class=@(Model.CurrentPage >= Model.NoOfPages ? "disabled" : "")><a href=@(Model.CurrentPage >= Model.NoOfPages? "#": @Url.Action("Publications", "Home", new { page = Model.CurrentPage + 1 }))>Next</a></li>
+        </ul>
+    </nav>
 </div>
 <script>
     var urlSearchPublications = "@Url.Action("Publications","Home")"

@@ -30,6 +30,7 @@
         $newsID = $self.data("id");
         $("#myEditModal-" + $newsID).modal('show');
     });
+
     $("#news-table").on("click", ".edit-news-btn", function () {
         $self = $(this);
         $newsID = $self.data("id");
@@ -82,4 +83,5 @@
             }
         })
     });
+
 });

@@ -101,6 +101,15 @@ namespace AI.Models
         public string LinkText { get; set; }
     }
 
+    public class NewsPageVM
+    {
+        public List<NewsVM> NewsList { get; set; }
+
+        public int CurrentPage { get; set; }
+
+        public int NoOfPages { get; set; }
+    }
+
     public class SoftwareDatasetVM
     {
         public int ID { get; set; }

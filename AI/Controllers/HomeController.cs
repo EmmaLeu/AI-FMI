@@ -238,9 +238,24 @@ namespace AI.Controllers
         }
 
         [HttpGet]
-        public ActionResult News()
+        public ActionResult News(int page = 1)
         {
-            List<NewsVM> newsList = Services.NewsService.GetNews().Select(i => new NewsVM()
+            var model = new NewsPageVM()
+            {
+                NewsList = new List<NewsVM>(),
+                NoOfPages = CalculatePages(Services.NewsService.GetNewsCount(), 5)
+            };
+
+            if(page >= 0 && page <= model.NoOfPages)
+            {
+                model.CurrentPage = page;
+            }
+            else
+            {
+                return Redirect(Request.UrlReferrer.AbsolutePath);
+            }
+
+            List<NewsVM> newsList = Services.NewsService.GetPagedNews(page, 5).Select(i => new NewsVM()
             {
                 NewsID = i.NewsID,
                 Title = i.Title,
@@ -251,7 +266,9 @@ namespace AI.Controllers
 
             }).ToList();
 
-            return View(newsList);
+            model.NewsList = newsList;
+
+            return View(model);
         }
 
         [HttpPost]
@@ -311,18 +328,28 @@ namespace AI.Controllers
             return Redirect(Request.UrlReferrer.AbsolutePath);
         }
 
-        public ActionResult Publications(string searchText, bool isSearch = false, int sort = 1)
+        public ActionResult Publications(string searchText, bool isSearch = false, string sort = "All", int page = 1)
         {
             var items = new PublicationsVM()
             {
                 SearchText = searchText,
-                SortOption = sort
+                Categories = PopulateCategories(),
+                Category = sort
             };
+
+            items.NoOfPages = CalculatePages(Services.PublicationService.GetPublicationCount(sort), 5);          
 
             if (!isSearch)
             {
-
-                items.Publications = Services.PublicationService.GetPublications(sort)
+                if (page >= 0 && page <= items.NoOfPages)
+                {
+                    items.CurrentPage = page;
+                }
+                else
+                {
+                    return Redirect(Request.UrlReferrer.AbsolutePath);
+                }
+                items.Publications = Services.PublicationService.GetPublicationsPaged(sort, page, 5)
                 .Select(i => new PublicationVM()
                 {
                     PublicationID = i.PublicationID,
@@ -356,6 +383,7 @@ namespace AI.Controllers
             }
             else
             {
+                items.CurrentPage = 1;
                 items.Publications = Services.PublicationService.SearchPublications(searchText).Select(i => new PublicationVM()
                 {
                     PublicationID = i.PublicationID,
@@ -392,16 +420,15 @@ namespace AI.Controllers
         {
             
             var filePath = Path.Combine(Server.MapPath("~/uploads"), fileName);
-            var data = System.IO.File.ReadAllBytes(filePath);
-
-            //var cd = new System.Net.Mime.ContentDisposition
-            //{
-            //    FileName = fileName,
-            //    Inline = true
-            //};
-
-           // Response.AppendHeader("Content-Disposition", cd.ToString());
-            return File(data, MimeMapping.GetMimeMapping(fileName));
+            if (System.IO.File.Exists(filePath))
+            {
+                var data = System.IO.File.ReadAllBytes(filePath);
+                return File(data, MimeMapping.GetMimeMapping(fileName));
+            }
+            else
+            {
+                throw new Exception("The file does not exist!");
+            }
         }
 
         public ActionResult UploadCoverImage(HttpPostedFileBase image)
@@ -538,6 +565,26 @@ namespace AI.Controllers
                     Title = i.Title,
                     CreationDate = i.CreationDate
                 }).ToList();
+        }
+
+        private List<CategoryVM> PopulateCategories()
+        {
+            var categories = new List<CategoryVM>();
+            categories.Add(new CategoryVM() { Id = "All", Name = "All" });
+            categories.Add(new CategoryVM() { Id = "Book", Name = "Book" });
+            categories.Add(new CategoryVM() { Id = "Chapter", Name = "Chapter" });
+            categories.Add(new CategoryVM() { Id = "Conference", Name = "Conference" });
+            categories.Add(new CategoryVM() { Id = "Journal", Name = "Journal" });
+            categories.Add(new CategoryVM() { Id = "Patent", Name = "Patent" });
+            categories.Add(new CategoryVM() { Id = "Thesis", Name = "Thesis" });
+            categories.Add(new CategoryVM() { Id = "Other", Name = "Other" });
+            return categories;
+
+        }
+
+        private int CalculatePages(int total, int items)
+        {
+            return Convert.ToInt32(Math.Ceiling(total / (float)items));
         }
     }
 

@@ -166,6 +166,21 @@ namespace AI.Models
         public string SearchText { get; set; }
 
         public int SortOption { get; set; }
+
+        public IEnumerable<CategoryVM> Categories { get; set; }
+
+        public string Category { get; set; }
+
+        public int CurrentPage { get; set; }
+
+        public int NoOfPages { get; set; }
+    }
+
+    public class CategoryVM
+    {
+        public string Id { get; set; }
+
+        public string Name { get; set; }
     }
 
 }

@@ -34,5 +34,14 @@ namespace BL
         {
             return repository.NewsRepo.GetNews();
         }
+        public List<News> GetPagedNews(int pageNumber, int itemsPerPage)
+        {
+            return repository.NewsRepo.GetPagedNews(pageNumber, itemsPerPage);
+        }
+
+        public int GetNewsCount()
+        {
+            return repository.NewsRepo.GetNewsCount();
+        }
     }
 }

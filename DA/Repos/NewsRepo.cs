@@ -31,6 +31,25 @@ namespace DA.Repos
                 .ToList();
         }
 
+        public List<News> GetPagedNews(int pageNumber, int itemsPerPage)
+        {
+            if (pageNumber > 0 && (pageNumber - 1) * itemsPerPage < GetNewsCount())
+            {
+                return context.News
+                    .OrderByDescending(i => i.NewsID)
+                    .Skip((pageNumber - 1) * itemsPerPage)
+                    .Take(itemsPerPage)
+                    .ToList();
+            }
+
+            return new List<News>();
+        }
+
+        public int GetNewsCount()
+        {
+            return context.News.Count();
+        }
+
         public void AddNews(News news, User user)
         {
             news.User = user;

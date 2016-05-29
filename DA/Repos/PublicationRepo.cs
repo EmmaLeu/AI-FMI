@@ -40,30 +40,69 @@ namespace DA.Repos
             context.SaveChanges();
         }
 
-        public List<Publication> GetPublications(int sort)
+        public List<Publication> GetPublications(string sort)
         {
             var publications = new List<Publication>();
-            if (sort == 1)
+            if (sort == "All")
             {
                 publications = context.Publications
-                    .OrderByDescending(i => i.PublicationID)
                     .Include(u => u.Upload)
                     .Include(u => u.Images)
-                    .OrderByDescending(u => u.PublicationYear)
-                    .ThenByDescending(u => u.PublicationID)
+                    .OrderBy(u => u.Category)
+                    .ThenByDescending(u => u.PublicationYear)
                     .ToList();
             }
             else
             {
                 publications = context.Publications
-                    .OrderByDescending(i => i.PublicationID)
+                    .OrderByDescending(i => i.PublicationYear)
                     .Include(u => u.Upload)
                     .Include(u => u.Images)
-                    .OrderBy(u => u.Category)
-                    .ThenByDescending(u => u.PublicationID)
+                    .Where(u => u.Category == sort)
                     .ToList();
             }
             return publications;
+        }
+
+        public List<Publication> GetPublicationsPaged(string sort, int page, int itemsPerPage)
+        {
+            var publications = new List<Publication>();
+            if (page > 0 && (page - 1) * itemsPerPage < GetPublicationCount(sort))
+            {
+                if (sort == "All")
+                {
+                    publications = context.Publications
+                         .Include(u => u.Upload)
+                         .Include(u => u.Images)
+                         .OrderBy(u => u.Category)
+                         .ThenByDescending(u => u.PublicationYear)
+                         .Skip((page - 1) * itemsPerPage)
+                         .Take(itemsPerPage)
+                         .ToList();
+                }
+                else
+                {
+                    publications = context.Publications
+                    .OrderByDescending(i => i.PublicationYear)
+                    .Include(u => u.Upload)
+                    .Include(u => u.Images)
+                    .Where(u => u.Category == sort)
+                    .Skip((page - 1) * itemsPerPage)
+                    .Take(itemsPerPage)
+                    .ToList();
+                }
+            }
+
+            return publications;
+        }
+
+        public int GetPublicationCount(string category)
+        {
+            if (category != "All")
+            {
+                return context.Publications.Where(u => u.Category == category).Count();
+            }
+            return context.Publications.Count();
         }
 
         public List<Publication> GetLatestPublications(int howMany)
@@ -210,6 +249,17 @@ namespace DA.Repos
             }
 
             context.SaveChanges();
+        }
+
+        public List<string> GetCategories()
+        {
+            var categories = context
+                .Publications
+                .Select(i => i.Category)
+                .Distinct()
+                .ToList();
+
+            return categories != null ? categories : new List<string>();
         }
     }
 }

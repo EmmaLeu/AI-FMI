@@ -337,7 +337,6 @@
     <Content Include="Views\Home\Publications.cshtml" />
     <Content Include="Views\Profile\ViewProfile.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\News.cshtml" />
     <Content Include="Scripts\jquery-2.2.1.min.map" />
     <Content Include="Views\Profile\AddSoftware.cshtml" />
     <Content Include="Views\Profile\AddDataset.cshtml" />
@@ -351,6 +350,7 @@
     <Content Include="Views\Profile\UpdateSoftware.cshtml" />
     <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Admin\AddCollaborator.cshtml" />
+    <Content Include="Views\Home\News.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
