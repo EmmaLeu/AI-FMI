@@ -81,4 +81,8 @@
     $("body").on("click", "#remove-filters", function () {
         location.reload();
     });
+    $("body").on("click", ".toggle-abstract-btn", function () {
+        $self = $(this);
+        $self.next(".abstract-div").toggle('show');
+    });
 });

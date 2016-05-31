@@ -5,22 +5,26 @@
 }
 <div id="publication-content-big">
     <div class="row publication-header">
-        <h3 class="col-md-8">Publications
+        <h3 class="col-md-2">Publications
             
             @if (!Model.SearchText.IsEmpty())
             {
-                <div class="btn btn-default">@Model.SearchText <i class="fa fa-times" id="remove-filters"></i></div>
-            }
-            else
-            {
-                <div style="display: inline">
-                    @Html.DropDownListFor(model => model.Category, new SelectList(Model.Categories, "Id", "Name"), new { id = "dropdown-category", @class = "dropdown-menu", @style = "display:inline" })
-                    @Html.HiddenFor(model => model.Category)                
-                </div>
-
+                
             }
         </h3>
-        
+        @if (Model.SearchText.IsEmpty())
+        {
+            <div class="col-md-6">
+                @Html.DropDownListFor(model => model.Category, new SelectList(Model.Categories, "Id", "Name"), new { id = "dropdown-category", @class = "dropdown-menu  ai-vertical-align", @style = "display:inline;" })
+                @Html.HiddenFor(model => model.Category)
+            </div>
+                }
+        else
+        {
+            <div class="col-md-6">
+                <div class="btn btn-default ai-vertical-align">@Model.SearchText <i class="fa fa-times" id="remove-filters"></i></div>
+            </div>
+        }
          <div class="col-md-4 ai-vertical-align">
             <input placeholder="Search publications..." id="in-search-publications" class="col-md-9 ai-search-box" />
             <div class="col-md-3 ai-search-icon" id="btn-search-publications"><i style="color: white;" class="fa fa-search ai-vertical-align"></i></div>
@@ -32,11 +36,23 @@
         {
             var currentYear = Model.Publications.First().PublicationDate;
             var currentCategory = Model.Publications.First().Category;
-
+            <h4>@currentCategory</h4>
+            <h6>@currentYear</h6>
             foreach (var publication in Model.Publications)
             {
+                if (publication.Category != currentCategory)
+                {
+                    currentCategory = publication.Category;
+                    <h4>@currentCategory</h4>
 
-            <div class="col-md-12 bs-callout bs-callout-primary publication-box">
+                }
+                if (publication.PublicationDate != currentYear)
+                {
+                    currentYear = publication.PublicationDate;
+                    <h6>@currentYear</h6>
+
+                }
+            <div class="col-md-12 bs-callout bs-callout-primary publication-box" style="margin-top:0px">
                 <div>
                     @if (Session.CurrentUser != null && (Session.CurrentUser.IsAdmin || publication.UserID == Session.CurrentUser.UserID))
                     {
@@ -88,22 +104,6 @@
                     </div>
 
                 </div>
-                <div>
-                    @if (publication.ImageName != null && publication.ImageName != string.Empty)
-                    {
-                        <div class="pull-right">
-                            <img style="max-height : 180px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = publication.ImageName })>
-                        </div>
-                    }
-                </div>
-                @if (publication.Abstract != null)
-                {
-                    <br/>
-                    <div>
-                        <p>Abstract</p>
-                        @publication.Abstract
-                    </div>
-                }
                 @if (publication.Link != null)
                 {
                     <p><a href="@publication.Link" target="_blank">@(publication.LinkText != null ? publication.LinkText : publication.Link)</a></p>
@@ -127,6 +127,27 @@
                         <i class="fa fa-download"></i> 
                         <a href='@Path.Combine("/uploads", publication.UploadName)' target="_blank">Download</a>
                     </span>
+                }
+                @if (publication.Abstract != null || publication.ImageName != null)
+                {
+                    <button class="btn btn-sm btn-link toggle-abstract-btn" style="text-align:left; padding:0px; display:block;">See/hide abstract</button>
+                    <div class="abstract-div" hidden>
+                        <div>
+                            @if (publication.ImageName != null && publication.ImageName != string.Empty)
+                            {
+                                <div class="pull-right">
+                                    <img style="max-height : 180px; max-width : 200px;" src=@Url.Action("GetImage", "Home", new { fileName = publication.ImageName })>
+                                </div>
+                            }
+                        </div>
+                        @if (publication.Abstract != null)
+                        {
+                            <br />
+                            <div>
+                                @publication.Abstract
+                            </div>
+                        }
+                    </div>
                 }
                 <div class="clearfix col-md-12"> 
                     <small class="post-date pull-right">
