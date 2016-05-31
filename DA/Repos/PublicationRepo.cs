@@ -80,6 +80,17 @@ namespace DA.Repos
                          .Take(itemsPerPage)
                          .ToList();
                 }
+                else if(sort == "Year")
+                {
+                    publications = context.Publications
+                         .Include(u => u.Upload)
+                         .Include(u => u.Images)
+                         .OrderByDescending(u => u.PublicationYear)
+                         .ThenBy(u => u.Category)
+                         .Skip((page - 1) * itemsPerPage)
+                         .Take(itemsPerPage)
+                         .ToList();
+                }
                 else
                 {
                     publications = context.Publications
@@ -98,7 +109,7 @@ namespace DA.Repos
 
         public int GetPublicationCount(string category)
         {
-            if (category != "All")
+            if (category != "All" && category != "Year")
             {
                 return context.Publications.Where(u => u.Category == category).Count();
             }

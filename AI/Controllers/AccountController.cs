@@ -78,6 +78,26 @@ namespace AI.Controllers
 
             return RedirectToAction("Login", "Account");
         }
+
+        // GET: /Account/ChangePassword
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Account/ChangePassword
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangePassword(ChangePasswordVM model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
         /*private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 

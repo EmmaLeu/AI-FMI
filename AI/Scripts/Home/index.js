@@ -35,7 +35,7 @@
             if (resp == 'ok') {
                 $(".modal-body>.alert-success").remove();
                 $(".modal-body.modal-edit").append('<p class="alert-success left">Update successfully done.</p>');
-                $("#cover-caption").text($("#editedCaption").val());
+                $("#caption-heading").text($("#editedCaption").val());
             }
             else {
             }

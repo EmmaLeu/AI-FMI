@@ -243,7 +243,7 @@ namespace AI.Controllers
             var model = new NewsPageVM()
             {
                 NewsList = new List<NewsVM>(),
-                NoOfPages = CalculatePages(Services.NewsService.GetNewsCount(), 5)
+                NoOfPages = CalculatePages(Services.NewsService.GetNewsCount(), 15)
             };
 
             if(page >= 0 && page <= model.NoOfPages)
@@ -328,7 +328,7 @@ namespace AI.Controllers
             return Redirect(Request.UrlReferrer.AbsolutePath);
         }
 
-        public ActionResult Publications(string searchText, bool isSearch = false, string sort = "All", int page = 1)
+        public ActionResult Publications(string searchText, bool isSearch = false, string sort = "Year", int page = 1)
         {
             var items = new PublicationsVM()
             {
@@ -337,7 +337,7 @@ namespace AI.Controllers
                 Category = sort
             };
 
-            items.NoOfPages = CalculatePages(Services.PublicationService.GetPublicationCount(sort), 5);          
+            items.NoOfPages = CalculatePages(Services.PublicationService.GetPublicationCount(sort), 15);          
 
             if (!isSearch)
             {
@@ -349,7 +349,7 @@ namespace AI.Controllers
                 {
                     return Redirect(Request.UrlReferrer.AbsolutePath);
                 }
-                items.Publications = Services.PublicationService.GetPublicationsPaged(sort, page, 5)
+                items.Publications = Services.PublicationService.GetPublicationsPaged(sort, page, 15)
                 .Select(i => new PublicationVM()
                 {
                     PublicationID = i.PublicationID,
@@ -570,14 +570,15 @@ namespace AI.Controllers
         private List<CategoryVM> PopulateCategories()
         {
             var categories = new List<CategoryVM>();
-            categories.Add(new CategoryVM() { Id = "All", Name = "All" });
-            categories.Add(new CategoryVM() { Id = "Book", Name = "Book" });
-            categories.Add(new CategoryVM() { Id = "Chapter", Name = "Chapter" });
-            categories.Add(new CategoryVM() { Id = "Conference", Name = "Conference" });
-            categories.Add(new CategoryVM() { Id = "Journal", Name = "Journal" });
-            categories.Add(new CategoryVM() { Id = "Patent", Name = "Patent" });
-            categories.Add(new CategoryVM() { Id = "Thesis", Name = "Thesis" });
-            categories.Add(new CategoryVM() { Id = "Other", Name = "Other" });
+            categories.Add(new CategoryVM() { Id = "Year", Name = "Year" });
+            categories.Add(new CategoryVM() { Id = "All", Name = "All categories" });
+            categories.Add(new CategoryVM() { Id = "Book", Name = "Books" });
+            categories.Add(new CategoryVM() { Id = "Chapter", Name = "Chapters" });
+            categories.Add(new CategoryVM() { Id = "Conference", Name = "Conferences" });
+            categories.Add(new CategoryVM() { Id = "Journal", Name = "Journals" });
+            categories.Add(new CategoryVM() { Id = "Patent", Name = "Patents" });
+            categories.Add(new CategoryVM() { Id = "Thesis", Name = "Theses" });
+            categories.Add(new CategoryVM() { Id = "Other", Name = "Others" });
             return categories;
 
         }

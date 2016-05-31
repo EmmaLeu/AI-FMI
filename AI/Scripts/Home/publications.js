@@ -78,10 +78,13 @@
         })
     });
     });
+
     $("body").on("click", "#remove-filters", function () {
         location.reload();
     });
-    $("body").on("click", ".toggle-abstract-btn", function () {
+
+    $("#publication-content-big").on("click", ".toggle-abstract-btn", function (e) {
+       // e.stopPropagation();
         $self = $(this);
         $self.next(".abstract-div").toggle('show');
     });

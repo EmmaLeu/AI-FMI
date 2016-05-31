@@ -10,6 +10,8 @@ using BE;
 using System.Web.Security;
 using AI.Code.Salt;
 using AI.Code.Utils;
+using System.Net.Mail;
+using System.Net;
 
 namespace AI.Controllers
 {
@@ -51,7 +53,30 @@ namespace AI.Controllers
                     IsDeleted = false
 
                 };
-      
+                var link = "?password=" + password;
+                var body = "<p>Email From: {0} ({1})</p><p>Message:</p><p>{2}</p>";
+                var message = new MailMessage();
+                message.To.Add(new MailAddress(user.LoginEmail));  // replace with valid value 
+                message.From = new MailAddress("radu.ionescu@gmail.com");  // replace with valid value
+                message.Subject = "Account confirmation";
+                message.Body = string.Format(body, message.From, "AI Research", "Please confirm by clicking this link ");
+                message.IsBodyHtml = true;
+
+                using (var smtp = new SmtpClient())
+                {
+                    var credential = new NetworkCredential
+                    {
+                        UserName = "user@outlook.com",  // replace with valid value
+                        Password = "password"  // replace with valid value
+                    };
+                    smtp.Credentials = credential;
+                    smtp.Host = "smtp-mail.outlook.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                   // await smtp.SendMailAsync(message);
+                    //return RedirectToAction("Sent");
+                }
+
                 Services.UserService.AddUser(newUser, user.RoleID);
                 user.Roles = GetRoles();
                 return RedirectToAction("Login", "Account");

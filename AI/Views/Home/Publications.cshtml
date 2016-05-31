@@ -6,11 +6,6 @@
 <div id="publication-content-big">
     <div class="row publication-header">
         <h3 class="col-md-2">Publications
-            
-            @if (!Model.SearchText.IsEmpty())
-            {
-                
-            }
         </h3>
         @if (Model.SearchText.IsEmpty())
         {
@@ -18,7 +13,7 @@
                 @Html.DropDownListFor(model => model.Category, new SelectList(Model.Categories, "Id", "Name"), new { id = "dropdown-category", @class = "dropdown-menu  ai-vertical-align", @style = "display:inline;" })
                 @Html.HiddenFor(model => model.Category)
             </div>
-                }
+        }
         else
         {
             <div class="col-md-6">
@@ -36,20 +31,49 @@
         {
             var currentYear = Model.Publications.First().PublicationDate;
             var currentCategory = Model.Publications.First().Category;
-            <h4>@currentCategory</h4>
-            <h6>@currentYear</h6>
+            if (Model.Category !="Year")
+            {
+                <h4>@currentCategory</h4>
+                <h6>@currentYear</h6>
+            }
+            else
+            {
+                <h4>@currentYear</h4>
+                <h6>@currentCategory</h6>
+            }
             foreach (var publication in Model.Publications)
             {
-                if (publication.Category != currentCategory)
+                if (Model.Category != "Year")
                 {
-                    currentCategory = publication.Category;
-                    <h4>@currentCategory</h4>
+                    if (publication.Category != currentCategory)
+                    {
 
+                        currentCategory = publication.Category;
+                        <h4>@currentCategory</h4>
+
+                    }
+                    if (publication.PublicationDate != currentYear)
+                    {
+                        currentYear = publication.PublicationDate;
+                        <h6>@currentYear</h6>
+
+                    }
                 }
-                if (publication.PublicationDate != currentYear)
+                else
                 {
-                    currentYear = publication.PublicationDate;
-                    <h6>@currentYear</h6>
+                    if (publication.PublicationDate != currentYear)
+                    {
+                        currentYear = publication.PublicationDate;
+                        <h4>@currentYear</h4>
+
+                    }
+                    if (publication.Category != currentCategory)
+                    {
+
+                        currentCategory = publication.Category;
+                        <h6>@currentCategory</h6>
+
+                    }
 
                 }
             <div class="col-md-12 bs-callout bs-callout-primary publication-box" style="margin-top:0px">
@@ -130,7 +154,7 @@
                 }
                 @if (publication.Abstract != null || publication.ImageName != null)
                 {
-                    <button class="btn btn-sm btn-link toggle-abstract-btn" style="text-align:left; padding:0px; display:block;">See/hide abstract</button>
+                    <button class="btn btn-sm btn-link toggle-abstract-btn" style="text-align:left; padding:0px; display:block;">Show/hide abstract</button>
                     <div class="abstract-div" hidden>
                         <div>
                             @if (publication.ImageName != null && publication.ImageName != string.Empty)

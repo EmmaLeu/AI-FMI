@@ -43,11 +43,12 @@
         }
     </div>
 }
-<div>
-    <button class="btn btn-lg btn-link" id="toggle-publications-btn">See/hide publications</button>
-</div>
+
 @if (Model.Publications.Count() > 0)
-{<div id="publication-content-big" hidden>
+{   <div>
+        <button class="btn btn-lg btn-link" id="toggle-publications-btn">Show/hide publications</button>
+    </div>
+    <div id="publication-content-big">
         <div id="publication-content">
             <h3>Publications</h3>
             @if (Model.Publications.Count > 0)
@@ -166,11 +167,13 @@
         </div>
     </div>
 }
-<div>
-    <button class="btn btn-lg btn-link" id="toggle-software-btn">See/hide software</button>
-</div>
+
 @if (Model.Software.Count() > 0)
-{<div id="software-content-big" hidden>
+{   
+    <div>
+        <button class="btn btn-lg btn-link" id="toggle-software-btn">Show/hide software</button>
+    </div>
+    <div id="software-content-big">
   <div id="software-content">
     <h3>Software</h3>
     @foreach (var item in Model.Software)
@@ -247,12 +250,13 @@
       </div>
     </div>
 }
-<div>
-    <button class="btn btn-lg btn-link" id="toggle-datasets-btn">See/hide datasets</button>
-</div>
+
 @if (Model.Datasets.Count() > 0)
 {
-    <div id="datasets-content-big" hidden>
+    <div>
+        <button class="btn btn-lg btn-link" id="toggle-datasets-btn">Show/hide datasets</button>
+    </div>
+    <div id="datasets-content-big">
         <div id="datasets-content">
             <h3>Datasets</h3>
             @foreach (var item in Model.Datasets)
