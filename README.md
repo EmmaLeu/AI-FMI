@@ -1,6 +1,6 @@
 # AI-FMI
 
-Web Application for managing reasearch groups publications.
+Web Application for managing research groups publications.
 
 Warning: I developed this project in my early programming days. It is no longer maintained and I would not recommend this stucture anymore.
 
